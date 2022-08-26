@@ -10,8 +10,8 @@ config_version=4
 
 [application]
 
-config/name="Juego de prueba 1"
-run/main_scene="res://scenes/Mundo.tscn"
+config/name="Floorless"
+run/main_scene="res://scenes/main.tscn"
 config/icon="res://icon.png"
 
 [display]
