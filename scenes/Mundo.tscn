@@ -2,9 +2,9 @@
 
 [ext_resource path="res://main_lev_build.png" type="Texture" id=1]
 [ext_resource path="res://scenes/KinematicBody2D.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Final/Background_1.png" type="Texture" id=3]
-[ext_resource path="res://Final/Background_0.png" type="Texture" id=4]
-[ext_resource path="res://Enjl-Dark Halls Tileset/background_3.png" type="Texture" id=5]
+[ext_resource path="res://assets/Final/Background_1.png" type="Texture" id=3]
+[ext_resource path="res://assets/Final/Background_0.png" type="Texture" id=4]
+[ext_resource path="res://assets/Enjl-Dark Halls Tileset/background_3.png" type="Texture" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
