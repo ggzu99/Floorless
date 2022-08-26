@@ -1,0 +1,391 @@
+[gd_scene load_steps=55 format=2]
+
+[ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/player_character.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 9.0
+height = 14.0
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Player_Character:script")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "dash"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 80, 81, 82, 83, 84, 83, 82, 81, 80 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "fall"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 25, 26, 27 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "idle"
+length = 1.25
+loop = true
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "jump"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 23, 24 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "jump_start"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 20, 21, 22, 23 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "land"
+length = 0.333333
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.166667 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 28, 29 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "run"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 10, 11, 12, 13, 14, 15 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "sheathe_sword"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 56, 57, 58, 59 ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "slash1"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 42, 43, 44, 45, 46 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "slash2"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 46, 47, 48, 49, 50 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "slash3"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 51, 52, 53, 54, 55 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "wield_sword"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 40, 41, 42 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=41]
+animation = "dash"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "fall"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "jump_start"
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "land"
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "run"
+
+[sub_resource type="AnimationNodeAnimation" id=42]
+animation = "sheathe_sword"
+
+[sub_resource type="AnimationNodeAnimation" id=43]
+animation = "slash1"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "wield_sword"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=44]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=45]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=47]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=53]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
+
+[sub_resource type="AnimationNodeStateMachine" id=39]
+states/dash/node = SubResource( 41 )
+states/dash/position = Vector2( 1615.68, 179.429 )
+states/fall/node = SubResource( 15 )
+states/fall/position = Vector2( 834, 192.222 )
+states/idle/node = SubResource( 16 )
+states/idle/position = Vector2( 440, 240 )
+states/jump/node = SubResource( 17 )
+states/jump/position = Vector2( 1045, 240 )
+states/jump_start/node = SubResource( 18 )
+states/jump_start/position = Vector2( 687, 48 )
+states/land/node = SubResource( 19 )
+states/land/position = Vector2( 545, 397 )
+states/run/node = SubResource( 20 )
+states/run/position = Vector2( 457, 113.541 )
+states/sheathe_sword/node = SubResource( 42 )
+states/sheathe_sword/position = Vector2( 1320.04, 293.541 )
+states/slash1/node = SubResource( 43 )
+states/slash1/position = Vector2( 1485.04, 113.541 )
+states/wield_sword/node = SubResource( 21 )
+states/wield_sword/position = Vector2( 1275, 56 )
+transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "fall", "land", SubResource( 32 ), "land", "idle", SubResource( 33 ), "land", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "land", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "jump", "dash", SubResource( 51 ), "fall", "dash", SubResource( 52 ), "run", "dash", SubResource( 53 ), "idle", "dash", SubResource( 54 ) ]
+start_node = "fall"
+graph_offset = Vector2( 379.269, 3.86765 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=40]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player_Character" type="KinematicBody2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="Player_Character"]
+position = Vector2( 0, 1 )
+shape = SubResource( 1 )
+
+[node name="Pivot" type="Node2D" parent="Player_Character"]
+
+[node name="Sprite" type="Sprite" parent="Player_Character/Pivot"]
+texture = ExtResource( 1 )
+hframes = 10
+vframes = 9
+region_enabled = true
+region_rect = Rect2( 0, 0, 500, 333 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player_Character"]
+root_node = NodePath("../Pivot/Sprite")
+anims/RESET = SubResource( 2 )
+anims/dash = SubResource( 3 )
+anims/fall = SubResource( 4 )
+anims/idle = SubResource( 5 )
+anims/jump = SubResource( 6 )
+anims/jump_start = SubResource( 7 )
+anims/land = SubResource( 8 )
+anims/run = SubResource( 9 )
+anims/sheathe_sword = SubResource( 10 )
+anims/slash1 = SubResource( 11 )
+anims/slash2 = SubResource( 12 )
+anims/slash3 = SubResource( 13 )
+anims/wield_sword = SubResource( 14 )
+
+[node name="AnimationTree" type="AnimationTree" parent="Player_Character"]
+tree_root = SubResource( 39 )
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource( 40 )
