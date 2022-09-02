@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/player_character.gd" type="Script" id=2]
@@ -22,7 +22,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../Player_Character:script")
+tracks/1/path = NodePath("../..:movement_enabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -30,8 +30,8 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ ExtResource( 2 ) ]
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -48,6 +48,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 80, 81, 82, 83, 84, 83, 82, 81, 80 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../..:movement_enabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -331,17 +343,19 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=57]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=58]
+
 [sub_resource type="AnimationNodeStateMachine" id=39]
 states/dash/node = SubResource( 51 )
 states/dash/position = Vector2( 1533.46, 243.619 )
 states/fall/node = SubResource( 15 )
-states/fall/position = Vector2( 915.333, 353.555 )
+states/fall/position = Vector2( 858, 273.555 )
 states/idle/node = SubResource( 16 )
 states/idle/position = Vector2( 440, 240 )
 states/jump/node = SubResource( 17 )
-states/jump/position = Vector2( 1299.67, 260 )
+states/jump/position = Vector2( 1299.67, 298.667 )
 states/jump_start/node = SubResource( 18 )
-states/jump_start/position = Vector2( 687, 48 )
+states/jump_start/position = Vector2( 732.333, 40 )
 states/land/node = SubResource( 19 )
 states/land/position = Vector2( 545, 397 )
 states/run/node = SubResource( 20 )
@@ -352,9 +366,9 @@ states/slash1/node = SubResource( 43 )
 states/slash1/position = Vector2( 1485.04, 113.541 )
 states/wield_sword/node = SubResource( 21 )
 states/wield_sword/position = Vector2( 1275, 56 )
-transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "fall", "land", SubResource( 32 ), "land", "idle", SubResource( 33 ), "land", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "land", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "dash", SubResource( 52 ), "jump", "dash", SubResource( 53 ), "run", "dash", SubResource( 54 ), "dash", "jump", SubResource( 55 ), "dash", "fall", SubResource( 56 ), "dash", "run", SubResource( 57 ) ]
+transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "fall", "land", SubResource( 32 ), "land", "idle", SubResource( 33 ), "land", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "land", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "dash", SubResource( 52 ), "jump", "dash", SubResource( 53 ), "run", "dash", SubResource( 54 ), "dash", "jump", SubResource( 55 ), "dash", "fall", SubResource( 56 ), "dash", "run", SubResource( 57 ), "fall", "jump_start", SubResource( 58 ) ]
 start_node = "fall"
-graph_offset = Vector2( 419.793, -110.048 )
+graph_offset = Vector2( 376.331, 177.187 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -373,6 +387,7 @@ shape = SubResource( 1 )
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 9
+frame = 24
 region_enabled = true
 region_rect = Rect2( 0, 0, 500, 333 )
 
@@ -395,4 +410,5 @@ anims/wield_sword = SubResource( 14 )
 [node name="AnimationTree" type="AnimationTree" parent="Player_Character"]
 tree_root = SubResource( 39 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 40 )

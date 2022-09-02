@@ -12,6 +12,7 @@ onready var pivot = $Pivot
 onready var animation_player = $AnimationPlayer
 onready var animation_tree = $AnimationTree
 onready var playback = animation_tree.get("parameters/playback")
+export(bool) var movement_enabled = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_tree.active = true
@@ -22,13 +23,11 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity,Vector2.UP)
 	var horizontal_input = Input.get_axis("move_left","move_right")
 	var vertical_input = Input.get_axis("move_up","move_down")
-	if dash_time==0 or current_animation!="dash":
-		velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
-	else:
-		if velocity.x>0:
-			velocity.x = move_toward(velocity.x,SPEED*3,ACCELERATION*2)
-		else:
-			velocity.x = move_toward(velocity.x,-SPEED*3,ACCELERATION*2)
+	if !movement_enabled:
+		horizontal_input=0
+	velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
+	
+	
 	if velocity.y < 100 and dash_time == 0:
 		velocity.y += GRAVITY
 	if Input.is_action_just_pressed("dash") and dash_time==0:
@@ -87,6 +86,5 @@ func _physics_process(delta):
 			else:
 				playback.travel("fall")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+#func dash(direction):
+	
