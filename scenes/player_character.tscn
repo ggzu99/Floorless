@@ -1,7 +1,8 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/player_character.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ui/pause_menu.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 9.0
@@ -425,3 +426,7 @@ one_shot = true
 process_mode = 0
 wait_time = 0.5
 one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player_Character"]
+
+[node name="Node2D" parent="Player_Character/CanvasLayer" instance=ExtResource( 3 )]
