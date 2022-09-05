@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/player_character.gd" type="Script" id=2]
@@ -184,7 +184,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=11]
 resource_name = "slash1"
-length = 0.5
+length = 0.4
+step = 0.0666667
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -192,7 +193,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"times": PoolRealArray( 0, 0.0666667, 0.133333, 0.2, 0.266667 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 42, 43, 44, 45, 46 ]
@@ -352,6 +353,11 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=67]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=68]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=69]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id=39]
 states/dash/node = SubResource( 59 )
 states/dash/position = Vector2( 1643.33, 178.15 )
@@ -373,9 +379,9 @@ states/slash1/node = SubResource( 43 )
 states/slash1/position = Vector2( 1485.04, 113.541 )
 states/wield_sword/node = SubResource( 21 )
 states/wield_sword/position = Vector2( 1257, 53 )
-transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "fall", "land", SubResource( 32 ), "land", "idle", SubResource( 33 ), "land", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "land", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "jump_start", SubResource( 58 ), "fall", "dash", SubResource( 60 ), "jump", "dash", SubResource( 61 ), "run", "dash", SubResource( 62 ), "sheathe_sword", "dash", SubResource( 63 ), "dash", "jump", SubResource( 64 ), "dash", "fall", SubResource( 65 ), "dash", "land", SubResource( 66 ), "jump_start", "dash", SubResource( 67 ) ]
+transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "fall", "land", SubResource( 32 ), "land", "idle", SubResource( 33 ), "land", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "land", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "jump_start", SubResource( 58 ), "fall", "dash", SubResource( 60 ), "jump", "dash", SubResource( 61 ), "run", "dash", SubResource( 62 ), "sheathe_sword", "dash", SubResource( 63 ), "dash", "jump", SubResource( 64 ), "dash", "fall", SubResource( 65 ), "dash", "land", SubResource( 66 ), "jump_start", "dash", SubResource( 67 ), "jump_start", "wield_sword", SubResource( 68 ), "sheathe_sword", "jump_start", SubResource( 69 ) ]
 start_node = "fall"
-graph_offset = Vector2( 376.331, -23.8501 )
+graph_offset = Vector2( 606.35, -1.59728 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -430,3 +436,12 @@ one_shot = true
 [node name="CanvasLayer" type="CanvasLayer" parent="Player_Character"]
 
 [node name="Node2D" parent="Player_Character/CanvasLayer" instance=ExtResource( 3 )]
+
+[node name="Camera2D" type="Camera2D" parent="Player_Character"]
+current = true
+process_mode = 0
+limit_left = 0
+limit_top = 0
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+editor_draw_drag_margin = true
