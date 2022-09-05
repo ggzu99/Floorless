@@ -82,7 +82,7 @@ tracks/5/keys = {
 "values": [ 14.0 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("../../Sword/CollisionPolygon2D:polygon")
+tracks/6/path = NodePath("../../Sword/SwordHbox:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -91,55 +91,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ PoolVector2Array( -2.24901, 1.85327, -2.12999, -4.25262, -0.213603, -5.25963, 1.66311, -4.23134, 1.54409, 1.87456 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("../../Sword/CollisionPolygon2D:disabled")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
 "values": [ true ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("../../Sword/CollisionPolygon2D:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -5, -9 ) ]
-}
-tracks/9/type = "value"
-tracks/9/path = NodePath("../../Sword/CollisionPolygon2D:rotation_degrees")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 41.6386 ]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("../../Sword/CollisionPolygon2D:scale")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 2.32811, 1.86656 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -390,64 +342,16 @@ tracks/0/keys = {
 "values": [ 42, 43, 44, 45, 46 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../../Sword/CollisionPolygon2D:polygon")
+tracks/1/path = NodePath("../../Sword/SwordHbox:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.0666667 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ PoolVector2Array( -2.24901, 1.85327, -2.12999, -4.25262, -0.213603, -5.25963, 1.66311, -4.23134, 1.54409, 1.87456 ), PoolVector2Array( -6.44299, -4.8217, -2.14766, -6.96467, 6.87252, -6.96467, 9.87925, -1.07149, 9.87925, 3.21447, 9.02019, 5.35744, 5.15439, 9.10765, -7.73159, 9.10765, -3.86579, 3.21447, 0.859065, 4.28595, 4.72486, 2.67872, 5.15439, -1.07149, 3.86579, -3.75021, -6.44299, -3.75021 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../../Sword/CollisionPolygon2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../../Sword/CollisionPolygon2D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -5, -9 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../../Sword/CollisionPolygon2D:rotation_degrees")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 41.6386 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("../../Sword/CollisionPolygon2D:scale")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 0.0666667 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 2.32811, 1.86656 ), Vector2( 2.32, 1.88 ) ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -698,9 +602,7 @@ editor_draw_drag_margin = true
 
 [node name="Sword" type="Area2D" parent="Player_Character"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player_Character/Sword"]
-position = Vector2( -5, -9 )
-rotation = 0.726731
-scale = Vector2( 2.32811, 1.86656 )
-polygon = PoolVector2Array( -2.24901, 1.85327, -2.12999, -4.25262, -0.213603, -5.25963, 1.66311, -4.23134, 1.54409, 1.87456 )
+[node name="SwordHbox" type="CollisionPolygon2D" parent="Player_Character/Sword"]
+scale = Vector2( 2.32, 1.88 )
+polygon = PoolVector2Array( -6.44299, -4.8217, -2.14766, -6.96467, 6.87252, -6.96467, 9.87925, -1.07149, 9.87925, 3.21447, 9.02019, 5.35744, 5.15439, 9.10765, -7.75862, 9.04255, -11.2069, -0.531915, -4.31034, -0.531915, 0.859065, 4.28595, 4.72486, 2.67872, 5.15439, -1.07149, 3.86579, -3.75021, -6.44299, -3.75021 )
 disabled = true
