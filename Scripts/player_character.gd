@@ -3,11 +3,12 @@ extends KinematicBody2D
 
 var GRAVITY = 10
 var SPEED = 200
-var JUMP_SPEED = 200
+var JUMP_SPEED = 280
 var ACCELERATION = 2000
 var velocity = Vector2()
 var can_dash = true
-
+var down_pressed = false
+var up_pressed = false
 
 onready var pivot = $Pivot
 onready var animation_player = $AnimationPlayer
@@ -27,6 +28,7 @@ export(bool) var direction_modifier = false
 func _ready():
 	animation_tree.active = true
 	playback.travel("fall")
+	
 
 #Function that takes inputs
 func _input(event):
@@ -37,18 +39,26 @@ func _input(event):
 		can_dash=false
 		dash()
 	if movement_enabled and dash_timer.is_stopped():
-		if event.is_action_pressed("slash"):
-			slash()
-		elif event.is_action_pressed("down_slash"):
+		if event.is_action_pressed("slash") and (down_pressed or up_pressed):
 			slash()
 			direction_modifier=true
+		elif event.is_action_pressed("slash"):
+			slash()
 			
 func _physics_process(delta):
 	if dash_timer.get_time_left()>0:
 		velocity.y=0
-	velocity = move_and_slide(velocity,Vector2.UP)
+	velocity = move_and_slide(velocity,Vector2.UP,true)
 	var horizontal_input = Input.get_axis("move_left","move_right")
 	var vertical_input = Input.get_axis("move_up","move_down")
+	if vertical_input==1:
+		down_pressed=true
+	else:
+		down_pressed=false
+	if vertical_input==-1:
+		up_pressed=true
+	else:
+		up_pressed=false
 	if !movement_enabled:
 		horizontal_input=0
 	if dash_timer.get_time_left()>0:
@@ -57,22 +67,21 @@ func _physics_process(delta):
 		if playback.get_current_node()=="dash": playback.travel("dash_end")
 		velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
 	#Taking damage
-	if is_on_floor() and dmg_timer.get_time_left()==0:
-		dmg_timer.start(1)
 	if dmg_timer.get_time_left()>0:
 		if sprite.get_self_modulate()==Color(1,1,1,1):
 			sprite.set_self_modulate(Color(1,1,1,0))
 		else:
 			sprite.set_self_modulate(Color(1,1,1,1))
-	if !is_on_floor() and dmg_timer.get_time_left()==0:
+	if dmg_timer.get_time_left()==0:
 		sprite.set_self_modulate(Color(1,1,1,1))
 		
-	if velocity.y < 100 and dash_timer.get_time_left()==0:
+	if velocity.y < 150 and dash_timer.get_time_left()==0:
 		velocity.y += GRAVITY
-		
-	#if not sword_hitbox.is_disabled():
-	#	sword.position
-		
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.get_name()=="Spikes" and dmg_timer.get_time_left()==0:
+			take_damage()
+			bounce(true)
 	#Animations
 	if is_on_wall():
 		can_dash=true
@@ -97,7 +106,7 @@ func _physics_process(delta):
 				pivot.rotation_degrees=0
 				if dash_timer.is_stopped(): playback.travel("fall")
 	if not (is_on_wall()):
-		if not direction_modifier: pivot.rotation_degrees = 0
+		if not direction_modifier: pivot.rotation_degrees = 0.0
 		pivot.scale.y=1
 		if Input.is_action_pressed("move_left") and not (Input.is_action_pressed("move_right")) and dash_timer.is_stopped():
 			pivot.scale.x=-1
@@ -107,9 +116,12 @@ func _physics_process(delta):
 			if dash_timer.is_stopped(): playback.travel("fall")
 		elif velocity.y<0:
 			if dash_timer.is_stopped(): playback.travel("jump")
-	if direction_modifier:
+	if down_pressed and direction_modifier:
 		if pivot.scale.x==1: pivot.rotation_degrees=90
 		else: pivot.rotation_degrees=-90
+	if up_pressed and direction_modifier:
+		if pivot.scale.x==1: pivot.rotation_degrees=-90
+		else: pivot.rotation_degrees=90
 	if slash1:
 		playback.travel("slash1")
 	if slash2:
@@ -135,3 +147,15 @@ func slash():
 			slash2=true
 	if not slash1 and slash2 and not slash3:
 			slash3=true
+
+func bounce(with_floor=false):
+	var mult=1.2
+	if with_floor:
+		mult=1.0
+	if pivot.rotation_degrees==abs(90) or with_floor:
+		velocity.y=move_toward(velocity.y,-pivot.scale.y*JUMP_SPEED*mult,ACCELERATION)
+	else:
+		velocity.x=move_toward(velocity.x,pivot.scale.x * SPEED *mult,ACCELERATION)
+
+func take_damage():
+	dmg_timer.start(1)
