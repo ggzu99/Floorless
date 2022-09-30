@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/Ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
+[ext_resource path="res://assets/Ui/DungeonUI/Hearts.png" type="Texture" id=3]
+[ext_resource path="res://scenes/ui/MarginContainer.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 2 )
+region_rect = Rect2( 27, 26, 396, 101 )
+modulate_color = Color( 0.831373, 0.772549, 0.380392, 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 2 )
+region_rect = Rect2( 27, 26, 396, 101 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 2 )
+region_rect = Rect2( 27, 26, 396, 101 )
+modulate_color = Color( 0.529412, 0.494118, 0.25098, 1 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 51
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 1 )
+Button/icons/a = ExtResource( 2 )
+Button/styles/hover = SubResource( 4 )
+Button/styles/normal = SubResource( 5 )
+Button/styles/pressed = SubResource( 6 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+pause_mode = 2
+margin_right = 640.0
+margin_bottom = 360.0
+rect_clip_content = true
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = SubResource( 7 )
+script = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 640.0
+margin_bottom = 360.0
+grow_vertical = 0
+
+[node name="HP" type="Sprite" parent="MarginContainer/HBoxContainer"]
+position = Vector2( 26, 9 )
+texture = ExtResource( 3 )
+vframes = 6

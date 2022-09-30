@@ -17,8 +17,8 @@ onready var playback = animation_tree.get("parameters/playback")
 onready var sprite = $Pivot/Sprite
 onready var dmg_timer = $DamageTimer
 onready var dash_timer = $DashTimer
-#onready var sword = $Sword
-#onready var sword_hitbox = $Sword/SwordHbox
+onready var hud = $CanvasLayer/HUD/MarginContainer
+
 export(bool) var movement_enabled = true
 export(bool) var slash1 = false
 export(bool) var slash2 = false
@@ -80,7 +80,7 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.get_name()=="Spikes" and dmg_timer.get_time_left()==0:
-			take_damage()
+			take_damage(1)
 			bounce(true)
 	#Animations
 	if is_on_wall():
@@ -157,5 +157,6 @@ func bounce(with_floor=false):
 	else:
 		velocity.x=move_toward(velocity.x,pivot.scale.x * SPEED *mult,ACCELERATION)
 
-func take_damage():
+func take_damage(value):
+	hud.lives-=1
 	dmg_timer.start(1)
