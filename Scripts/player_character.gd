@@ -7,8 +7,10 @@ var JUMP_SPEED = 280
 var ACCELERATION = 2000
 var velocity = Vector2()
 var can_dash = true
+var dash_direction = 1
 var down_pressed = false
 var up_pressed = false
+var last_dir=1
 
 onready var pivot = $Pivot
 onready var animation_player = $AnimationPlayer
@@ -37,7 +39,7 @@ func _input(event):
 	if event.is_action_pressed("dash") and dash_timer.is_stopped() and can_dash:
 		playback.travel("dash")
 		can_dash=false
-		dash()
+		dash(last_dir)
 	if movement_enabled and dash_timer.is_stopped():
 		if event.is_action_pressed("slash") and (down_pressed or up_pressed):
 			slash()
@@ -50,6 +52,8 @@ func _physics_process(delta):
 		velocity.y=0
 	velocity = move_and_slide(velocity,Vector2.UP,true)
 	var horizontal_input = Input.get_axis("move_left","move_right")
+	if horizontal_input!=0:
+		last_dir=horizontal_input
 	var vertical_input = Input.get_axis("move_up","move_down")
 	if vertical_input==1:
 		down_pressed=true
@@ -62,60 +66,59 @@ func _physics_process(delta):
 	if !movement_enabled:
 		horizontal_input=0
 	if dash_timer.get_time_left()>0:
-		velocity.x=move_toward(velocity.x,pivot.scale.x * SPEED *1.5,ACCELERATION)
+		velocity.x=move_toward(velocity.x,dash_direction * SPEED *1.5,ACCELERATION)
 	else:
 		if playback.get_current_node()=="dash": playback.travel("dash_end")
 		velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
 	#Taking damage
 	if dmg_timer.get_time_left()>0:
+		self.collision_mask=0b1101
 		if sprite.get_self_modulate()==Color(1,1,1,1):
 			sprite.set_self_modulate(Color(1,1,1,0))
 		else:
 			sprite.set_self_modulate(Color(1,1,1,1))
 	if dmg_timer.get_time_left()==0:
 		sprite.set_self_modulate(Color(1,1,1,1))
+		self.collision_mask=0b1111
 		
-	if velocity.y < 150 and dash_timer.get_time_left()==0:
+	if velocity.y < 180 and dash_timer.get_time_left()==0:
 		velocity.y += GRAVITY
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
-		if collision.collider.get_name()=="Spikes" and dmg_timer.get_time_left()==0:
-			take_damage(1)
-			bounce(true)
+		if dmg_timer.get_time_left()==0:
+			#Collide with spikes
+			if collision.collider.collision_layer & 8:
+				take_damage(1)
+				bounce(collision.collider,true)
+			#Collide with enemies
+			if collision.collider.collision_layer & 2:
+				take_damage(2)
+				bounce(collision.collider)
 	#Animations
 	if is_on_wall():
-		can_dash=true
-		if Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
-			pivot.scale.y=-1
-			pivot.rotation_degrees = 90
-			if velocity.y>0:
+		if velocity.y>0:
+			if Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
+				can_dash=true
+				pivot.scale.x=-1
+				if dash_timer.is_stopped(): playback.travel("wall_slide")
+			elif Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
+				can_dash=true
 				pivot.scale.x=1
+				if dash_timer.is_stopped(): playback.travel("wall_slide")
 			else:
-				pivot.scale.x=-1
-			if dash_timer.is_stopped(): playback.travel("run")
-		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
-			pivot.scale.y=-1
-			pivot.scale.x=1
-			pivot.rotation_degrees = -90
-			if velocity.y>0:
-				pivot.scale.x=-1
-			if dash_timer.is_stopped(): playback.travel("run")
-		else:
-			if not Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
-				pivot.scale.y=1
-				pivot.rotation_degrees=0
+				pivot.scale.x=last_dir
 				if dash_timer.is_stopped(): playback.travel("fall")
+				
 	if not (is_on_wall()):
 		if not direction_modifier: pivot.rotation_degrees = 0.0
-		pivot.scale.y=1
 		if Input.is_action_pressed("move_left") and not (Input.is_action_pressed("move_right")) and dash_timer.is_stopped():
 			pivot.scale.x=-1
 		if Input.is_action_pressed("move_right") and not (Input.is_action_pressed("move_left")) and dash_timer.is_stopped():
 			pivot.scale.x=1
 		if velocity.y>0:
 			if dash_timer.is_stopped(): playback.travel("fall")
-		elif velocity.y<0:
-			if dash_timer.is_stopped(): playback.travel("jump")
+	if velocity.y<0:
+		if dash_timer.is_stopped(): playback.travel("jump")
 	if down_pressed and direction_modifier:
 		if pivot.scale.x==1: pivot.rotation_degrees=90
 		else: pivot.rotation_degrees=-90
@@ -132,10 +135,15 @@ func _physics_process(delta):
 
 func jump():
 	if is_on_wall() and movement_enabled:
+		if last_dir<0:
+			velocity.x = JUMP_SPEED*8
+		elif last_dir>0:
+			velocity.x = -JUMP_SPEED*8
 		velocity.y = -JUMP_SPEED
 	
 
-func dash():
+func dash(direction):
+	dash_direction=direction
 	pivot.scale.y=1
 	velocity.x=0
 	dash_timer.start(0.5)
@@ -148,15 +156,19 @@ func slash():
 	if not slash1 and slash2 and not slash3:
 			slash3=true
 
-func bounce(with_floor=false):
-	var mult=1.2
+func bounce(origin:Node2D,with_floor=false):
+	var mult=1.5
+	var direction = (global_position - origin.global_position).normalized()
+	if origin is TileMap:
+		mult=1.4
+		origin = origin as TileMap
+		direction = Vector2(0,-1)
 	if with_floor:
-		mult=1.0
-	if pivot.rotation_degrees==abs(90) or with_floor:
-		velocity.y=move_toward(velocity.y,-pivot.scale.y*JUMP_SPEED*mult,ACCELERATION)
-	else:
-		velocity.x=move_toward(velocity.x,pivot.scale.x * SPEED *mult,ACCELERATION)
+		mult=1.2
+	velocity = direction * SPEED * mult
 
 func take_damage(value):
-	hud.lives-=1
+	hud.lives-=value
+	if hud.lives<=0:
+		get_tree().change_scene("res://scenes/main.tscn")
 	dmg_timer.start(1)

@@ -11,9 +11,10 @@ func _ready():
 	connect("body_entered", self, "_on_body_entered")
 	
 func _on_body_entered(body: Node):
-	player.bounce()
 	if body.has_method("take_damage"):
 		body.take_damage(4)
+	if body.collision_layer==2 or body.collision_layer==8:
+		player.bounce(body)
 	
 	
 
