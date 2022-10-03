@@ -1,35 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/pause_menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/Ui/PXUI-Basic/panel_Example1.png" type="Texture" id=3]
-
-[sub_resource type="StyleBoxTexture" id=9]
-texture = ExtResource( 3 )
-region_rect = Rect2( 27, 26, 396, 101 )
-modulate_color = Color( 0.831373, 0.772549, 0.380392, 1 )
-
-[sub_resource type="StyleBoxTexture" id=10]
-texture = ExtResource( 3 )
-region_rect = Rect2( 27, 26, 396, 101 )
-
-[sub_resource type="StyleBoxTexture" id=11]
-texture = ExtResource( 3 )
-region_rect = Rect2( 27, 26, 396, 101 )
-modulate_color = Color( 0.529412, 0.494118, 0.25098, 1 )
-
-[sub_resource type="DynamicFont" id=12]
-size = 51
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 2 )
-
-[sub_resource type="Theme" id=7]
-default_font = SubResource( 12 )
-Button/icons/a = ExtResource( 3 )
-Button/styles/hover = SubResource( 9 )
-Button/styles/normal = SubResource( 10 )
-Button/styles/pressed = SubResource( 11 )
+[ext_resource path="res://scenes/ui/theme.tres" type="Theme" id=3]
 
 [sub_resource type="DynamicFont" id=8]
 size = 51
@@ -42,7 +15,7 @@ margin_bottom = 360.0
 rect_clip_content = true
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = SubResource( 7 )
+theme = ExtResource( 3 )
 script = ExtResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

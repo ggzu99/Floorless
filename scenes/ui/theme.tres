@@ -10,7 +10,9 @@ modulate_color = Color( 0.831373, 0.772549, 0.380392, 1 )
 
 [sub_resource type="StyleBoxTexture" id=10]
 texture = ExtResource( 2 )
-region_rect = Rect2( 27, 26, 396, 101 )
+region_rect = Rect2( 26, 26, 398, 101 )
+expand_margin_left = 12.0
+expand_margin_right = 20.0
 
 [sub_resource type="StyleBoxTexture" id=11]
 texture = ExtResource( 2 )
@@ -29,3 +31,5 @@ Button/icons/a = ExtResource( 2 )
 Button/styles/hover = SubResource( 9 )
 Button/styles/normal = SubResource( 10 )
 Button/styles/pressed = SubResource( 11 )
+CheckBox/constants/check_vadjust = 0
+CheckBox/constants/hseparation = 12

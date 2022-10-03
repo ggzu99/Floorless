@@ -48,6 +48,7 @@ func _input(event):
 			slash()
 			
 func _physics_process(delta):
+	var collisions = []
 	if dash_timer.get_time_left()>0:
 		velocity.y=0
 	velocity = move_and_slide(velocity,Vector2.UP,true)
@@ -80,37 +81,40 @@ func _physics_process(delta):
 	if dmg_timer.get_time_left()==0:
 		sprite.set_self_modulate(Color(1,1,1,1))
 		self.collision_mask=0b1111
-		
+		0
 	if velocity.y < 180 and dash_timer.get_time_left()==0:
 		velocity.y += GRAVITY
+	if not direction_modifier: pivot.rotation_degrees = 0.0
 	for i in get_slide_count():
-		var collision = get_slide_collision(i)
+		collisions.append(get_slide_collision(i))
 		if dmg_timer.get_time_left()==0:
 			#Collide with spikes
-			if collision.collider.collision_layer & 8:
+			if collisions[i].collider.collision_layer & 8:
 				take_damage(1)
-				bounce(collision.collider,true)
+				bounce(collisions[i].collider,true)
 			#Collide with enemies
-			if collision.collider.collision_layer & 2:
+			if collisions[i].collider.collision_layer & 2:
 				take_damage(2)
-				bounce(collision.collider)
+				bounce(collisions[i].collider)
 	#Animations
-	if is_on_wall():
+	var real_wall = wall_and_not_enemy(collisions)
+	if is_on_wall() and real_wall:
 		if velocity.y>0:
 			if Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
 				can_dash=true
 				pivot.scale.x=-1
+				velocity.y = 100
 				if dash_timer.is_stopped(): playback.travel("wall_slide")
 			elif Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 				can_dash=true
 				pivot.scale.x=1
+				velocity.y = 100
 				if dash_timer.is_stopped(): playback.travel("wall_slide")
 			else:
 				pivot.scale.x=last_dir
 				if dash_timer.is_stopped(): playback.travel("fall")
 				
 	if not (is_on_wall()):
-		if not direction_modifier: pivot.rotation_degrees = 0.0
 		if Input.is_action_pressed("move_left") and not (Input.is_action_pressed("move_right")) and dash_timer.is_stopped():
 			pivot.scale.x=-1
 		if Input.is_action_pressed("move_right") and not (Input.is_action_pressed("move_left")) and dash_timer.is_stopped():
@@ -173,3 +177,9 @@ func take_damage(value):
 		hud.lives=Game.default_lives
 		get_tree().change_scene("res://scenes/main.tscn")
 	dmg_timer.start(1)
+
+func wall_and_not_enemy(collisions):
+	for collision in collisions:
+		if collision.collider.collision_layer & 2:
+			return false
+	return true
