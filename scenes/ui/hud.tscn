@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/Ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
 [ext_resource path="res://assets/Ui/DungeonUI/Hearts.png" type="Texture" id=3]
-[ext_resource path="res://scenes/ui/MarginContainer.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/hud.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 2 )
@@ -32,9 +32,7 @@ Button/styles/hover = SubResource( 4 )
 Button/styles/normal = SubResource( 5 )
 Button/styles/pressed = SubResource( 6 )
 
-[node name="Node2D" type="Node2D"]
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer"]
 pause_mode = 2
 margin_right = 640.0
 margin_bottom = 360.0
@@ -44,12 +42,12 @@ size_flags_vertical = 4
 theme = SubResource( 7 )
 script = ExtResource( 4 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 640.0
 margin_bottom = 360.0
 grow_vertical = 0
 
-[node name="HP" type="Sprite" parent="MarginContainer/HBoxContainer"]
+[node name="HP" type="Sprite" parent="HBoxContainer"]
 position = Vector2( 26, 9 )
 texture = ExtResource( 3 )
 vframes = 6

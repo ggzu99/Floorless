@@ -19,7 +19,7 @@ onready var playback = animation_tree.get("parameters/playback")
 onready var sprite = $Pivot/Sprite
 onready var dmg_timer = $DamageTimer
 onready var dash_timer = $DashTimer
-onready var hud = $CanvasLayer/HUD/MarginContainer
+onready var hud = $CanvasLayer/HUD
 
 export(bool) var movement_enabled = true
 export(bool) var slash1 = false
@@ -170,5 +170,6 @@ func bounce(origin:Node2D,with_floor=false):
 func take_damage(value):
 	hud.lives-=value
 	if hud.lives<=0:
+		hud.lives=Game.default_lives
 		get_tree().change_scene("res://scenes/main.tscn")
 	dmg_timer.start(1)
