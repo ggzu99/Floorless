@@ -167,16 +167,16 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 1/z_index = 0
 
 [sub_resource type="ConvexPolygonShape2D" id=46]
-points = PoolVector2Array( 0, 16, 6.37486, 3.91048, 9.6274, 3.79832, 16, 16 )
+points = PoolVector2Array( 1.87066, 15.9943, 6.37486, 3.91048, 9.6274, 3.79832, 13.6929, 16 )
 
 [sub_resource type="ConvexPolygonShape2D" id=42]
-points = PoolVector2Array( 0, 0, 9.89011, 5.88885, 9.89011, 10.3751, 0, 16 )
+points = PoolVector2Array( 0, 1.24078, 9.89011, 5.88885, 9.89011, 10.3751, 0.0185471, 15.098 )
 
 [sub_resource type="ConvexPolygonShape2D" id=43]
-points = PoolVector2Array( 16, 0, 10.2463, 9.9078, 5.85348, 9.81433, 0, 0 )
+points = PoolVector2Array( 14.8338, 0.0294952, 10.2463, 9.9078, 5.85348, 9.81433, 1.26733, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=44]
-points = PoolVector2Array( 16, 16, 5.92926, 9.72087, 5.8358, 5.88885, 16, 0 )
+points = PoolVector2Array( 15.8888, 15.1706, 5.92926, 9.72087, 5.8358, 5.88885, 16, 1.43459 )
 
 [sub_resource type="TileSet" id=45]
 0/name = "16-bit-spike-Sheet.png 0"

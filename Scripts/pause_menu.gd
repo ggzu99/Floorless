@@ -11,11 +11,6 @@ func _ready():
 	exit.connect("pressed", self, "_on_exit_pressed")
 	visible=false
 
-func _input(event):
-	if event.is_action_pressed("pause"):
-		visible = !visible
-		get_tree().paused = visible
-
 
 func _on_resume_pressed():
 	get_tree().paused = false

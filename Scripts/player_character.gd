@@ -19,8 +19,8 @@ onready var playback = animation_tree.get("parameters/playback")
 onready var sprite = $Pivot/Sprite
 onready var dmg_timer = $DamageTimer
 onready var dash_timer = $DashTimer
-onready var hud = $CanvasLayer/HUD
-
+onready var hud = $PlayerUI/HUD
+onready var turn_timer = $TurnaroundTimer
 export(bool) var movement_enabled = true
 export(bool) var slash1 = false
 export(bool) var slash2 = false
@@ -30,12 +30,11 @@ export(bool) var direction_modifier = false
 func _ready():
 	animation_tree.active = true
 	playback.travel("fall")
-	
 
 #Function that takes inputs
 func _input(event):
 	if event.is_action_pressed("jump"):
-		jump()
+		wall_jump()
 	if event.is_action_pressed("dash") and dash_timer.is_stopped() and can_dash:
 		playback.travel("dash")
 		can_dash=false
@@ -66,11 +65,12 @@ func _physics_process(delta):
 		up_pressed=false
 	if !movement_enabled:
 		horizontal_input=0
-	if dash_timer.get_time_left()>0:
-		velocity.x=move_toward(velocity.x,dash_direction * SPEED *1.5,ACCELERATION)
-	else:
-		if playback.get_current_node()=="dash": playback.travel("dash_end")
-		velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
+	if turn_timer.is_stopped():
+		if dash_timer.get_time_left()>0:
+			velocity.x=move_toward(velocity.x,dash_direction * SPEED *1.5,ACCELERATION)
+		else:
+			if playback.get_current_node()=="dash": playback.travel("dash_end")
+			velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
 	#Taking damage
 	if dmg_timer.get_time_left()>0:
 		self.collision_mask=0b1101
@@ -91,11 +91,11 @@ func _physics_process(delta):
 			#Collide with spikes
 			if collisions[i].collider.collision_layer & 8:
 				take_damage(1)
-				bounce(collisions[i].collider,true)
+				bounce(collisions[i].position,true)
 			#Collide with enemies
 			if collisions[i].collider.collision_layer & 2:
 				take_damage(2)
-				bounce(collisions[i].collider)
+				bounce(collisions[i].position)
 	#Animations
 	var real_wall = wall_and_not_enemy(collisions)
 	if is_on_wall() and real_wall:
@@ -137,13 +137,14 @@ func _physics_process(delta):
 		playback.travel("slash3")
 	
 
-func jump():
+func wall_jump():
 	if is_on_wall() and movement_enabled:
 		if last_dir<0:
-			velocity.x = JUMP_SPEED*8
+			velocity.x = JUMP_SPEED
 		elif last_dir>0:
-			velocity.x = -JUMP_SPEED*8
+			velocity.x = -JUMP_SPEED
 		velocity.y = -JUMP_SPEED
+		turn_timer.start(0.04)
 	
 
 func dash(direction):
@@ -160,13 +161,9 @@ func slash():
 	if not slash1 and slash2 and not slash3:
 			slash3=true
 
-func bounce(origin:Node2D,with_floor=false):
+func bounce(origin:Vector2,with_floor=false):
 	var mult=1.5
-	var direction = (global_position - origin.global_position).normalized()
-	if origin is TileMap:
-		mult=1.4
-		origin = origin as TileMap
-		direction = Vector2(0,-1)
+	var direction = (global_position - origin).normalized()
 	if with_floor:
 		mult=1.2
 	velocity = direction * SPEED * mult
