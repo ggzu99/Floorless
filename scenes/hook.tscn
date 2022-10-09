@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/Hook/basehookline.png" type="Texture" id=1]
+[ext_resource path="res://assets/Hook/hook.png" type="Texture" id=2]
+[ext_resource path="res://scenes/hook.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 19.0
+height = 10.0
+
+[node name="Hook" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Links" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -9, 0 )
+hframes = 2
+region_enabled = true
+region_rect = Rect2( 0, 0, 40, 300 )
+
+[node name="Tip" type="KinematicBody2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="HookTip" type="Sprite" parent="Tip"]
+texture = ExtResource( 2 )
+offset = Vector2( 0, -19 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tip"]
+position = Vector2( 0, -14 )
+shape = SubResource( 1 )
+
+[node name="LengthTimer" type="Timer" parent="."]
+one_shot = true

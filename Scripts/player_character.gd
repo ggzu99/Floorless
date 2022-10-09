@@ -1,16 +1,30 @@
 extends KinematicBody2D
 
 
-var GRAVITY = 10
-var SPEED = 200
-var JUMP_SPEED = 280
-var ACCELERATION = 2000
+const GRAVITY = 10
+const SPEED = 200
+const JUMP_SPEED = 280
+const ACCELERATION = 2000
+const HOOK_PULL = 20
+
+enum State {
+	NORMAL,
+	DASHING,
+	HOOK_ACTIVE
+}
+
+var state = State.NORMAL
 var velocity = Vector2()
+var hook_velocity = Vector2(0,0)
 var can_dash = true
 var dash_direction = 1
 var down_pressed = false
 var up_pressed = false
+var hook_uses = 3
+var horizontal_input
+var vertical_input
 var last_dir=1
+var this_scene:String
 
 onready var pivot = $Pivot
 onready var animation_player = $AnimationPlayer
@@ -21,6 +35,9 @@ onready var dmg_timer = $DamageTimer
 onready var dash_timer = $DashTimer
 onready var hud = $PlayerUI/HUD
 onready var turn_timer = $TurnaroundTimer
+onready var hook = $Hook
+onready var line = $Hook/Links
+onready var gun = $Pivot/Gun
 export(bool) var movement_enabled = true
 export(bool) var slash1 = false
 export(bool) var slash2 = false
@@ -45,16 +62,49 @@ func _input(event):
 			direction_modifier=true
 		elif event.is_action_pressed("slash"):
 			slash()
+	if event.is_action_pressed("hook") and hook_uses>0:
+		hook_uses-=1
+		if horizontal_input!=0 and vertical_input!=0:
+			hook.shoot(Vector2(horizontal_input,vertical_input/4))
+		elif horizontal_input==0 and vertical_input!=0:
+			hook.shoot(Vector2(0,vertical_input))
+		else:
+			hook.shoot(Vector2(last_dir,vertical_input))
+	if event.is_action_released("hook"):
+		hook.release()
+		state = State.NORMAL
+			
+		
 			
 func _physics_process(delta):
 	var collisions = []
-	if dash_timer.get_time_left()>0:
+	if state==State.DASHING:
 		velocity.y=0
 	velocity = move_and_slide(velocity,Vector2.UP,true)
-	var horizontal_input = Input.get_axis("move_left","move_right")
+	if hook.hooked:
+		state=State.HOOK_ACTIVE
+		# `to_local($Chain.tip).normalized()` is the direction that the chain is pulling
+		hook_velocity = to_local(hook.tip).normalized() * HOOK_PULL
+		if hook_velocity.y > 0:
+			# Pulling down isn't as strong
+			hook_velocity.y *= 0.55
+		else:
+			# Pulling up is stronger
+			hook_velocity.y *= 1.25
+		if sign(hook_velocity.x) != sign(horizontal_input):
+			# if we are trying to walk in a different
+			# direction than the hook is pulling
+			# reduce its pull
+			hook_velocity.x *= 0.7
+	else:
+		# Not hooked -> no hook velocity
+		hook_velocity = Vector2(0,0)
+	velocity += hook_velocity
+
+	horizontal_input = Input.get_axis("move_left","move_right")
 	if horizontal_input!=0:
 		last_dir=horizontal_input
-	var vertical_input = Input.get_axis("move_up","move_down")
+	vertical_input = Input.get_axis("move_up","move_down")
 	if vertical_input==1:
 		down_pressed=true
 	else:
@@ -65,12 +115,12 @@ func _physics_process(delta):
 		up_pressed=false
 	if !movement_enabled:
 		horizontal_input=0
-	if turn_timer.is_stopped():
-		if dash_timer.get_time_left()>0:
-			velocity.x=move_toward(velocity.x,dash_direction * SPEED *1.5,ACCELERATION)
-		else:
-			if playback.get_current_node()=="dash": playback.travel("dash_end")
-			velocity.x = move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
+	if dash_timer.is_stopped() and state==State.DASHING:
+		state=State.NORMAL
+	if state==State.DASHING:
+		velocity.x=move_toward(velocity.x,dash_direction * SPEED *1.5,ACCELERATION)
+	elif state==State.NORMAL:
+		velocity.x=move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
 	#Taking damage
 	if dmg_timer.get_time_left()>0:
 		self.collision_mask=0b1101
@@ -81,8 +131,7 @@ func _physics_process(delta):
 	if dmg_timer.get_time_left()==0:
 		sprite.set_self_modulate(Color(1,1,1,1))
 		self.collision_mask=0b1111
-		0
-	if velocity.y < 180 and dash_timer.get_time_left()==0:
+	if velocity.y < 180 and state!=State.DASHING:
 		velocity.y += GRAVITY
 	if not direction_modifier: pivot.rotation_degrees = 0.0
 	for i in get_slide_count():
@@ -98,7 +147,8 @@ func _physics_process(delta):
 				bounce(collisions[i].position)
 	#Animations
 	var real_wall = wall_and_not_enemy(collisions)
-	if is_on_wall() and real_wall:
+	if is_on_wall() and real_wall and state==State.NORMAL:
+		hook_uses = 3
 		if velocity.y>0:
 			if Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
 				can_dash=true
@@ -120,9 +170,9 @@ func _physics_process(delta):
 		if Input.is_action_pressed("move_right") and not (Input.is_action_pressed("move_left")) and dash_timer.is_stopped():
 			pivot.scale.x=1
 		if velocity.y>0:
-			if dash_timer.is_stopped(): playback.travel("fall")
+			if state!=State.DASHING: playback.travel("fall")
 	if velocity.y<0:
-		if dash_timer.is_stopped(): playback.travel("jump")
+		if state!=State.DASHING: playback.travel("jump")
 	if down_pressed and direction_modifier:
 		if pivot.scale.x==1: pivot.rotation_degrees=90
 		else: pivot.rotation_degrees=-90
@@ -135,7 +185,8 @@ func _physics_process(delta):
 		playback.travel("slash2")
 	if slash3:
 		playback.travel("slash3")
-	
+	gun.visible = hook.visible
+	gun.rotation = line.rotation - deg2rad(90)
 
 func wall_jump():
 	if is_on_wall() and movement_enabled:
@@ -151,6 +202,7 @@ func dash(direction):
 	dash_direction=direction
 	pivot.scale.y=1
 	velocity.x=0
+	state = State.DASHING
 	dash_timer.start(0.5)
 
 func slash():
@@ -172,7 +224,7 @@ func take_damage(value):
 	hud.lives-=value
 	if hud.lives<=0:
 		hud.lives=Game.default_lives
-		get_tree().change_scene("res://scenes/main.tscn")
+		get_tree().change_scene(this_scene)
 	dmg_timer.start(1)
 
 func wall_and_not_enemy(collisions):

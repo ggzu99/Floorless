@@ -13,7 +13,7 @@ func _ready():
 # var a = 2
 # var b = "text"
 func _on_play_pressed():
-	get_tree().change_scene("res://scenes/main.tscn")
+	get_tree().change_scene("res://scenes/tutorial.tscn")
 
 
 func _on_credits_pressed():
