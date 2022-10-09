@@ -119,7 +119,7 @@ func _physics_process(delta):
 		state=State.NORMAL
 	if state==State.DASHING:
 		velocity.x=move_toward(velocity.x,dash_direction * SPEED *1.5,ACCELERATION)
-	elif state==State.NORMAL:
+	elif state==State.NORMAL and turn_timer.is_stopped():
 		velocity.x=move_toward(velocity.x,horizontal_input * SPEED,ACCELERATION)
 	#Taking damage
 	if dmg_timer.get_time_left()>0:
