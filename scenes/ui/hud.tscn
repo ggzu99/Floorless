@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/Ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
-[ext_resource path="res://assets/Ui/DungeonUI/Hearts.png" type="Texture" id=3]
-[ext_resource path="res://Scripts/hud.gd" type="Script" id=4]
+[ext_resource path="res://assets/ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/DungeonUI/Hearts.png" type="Texture" id=3]
+[ext_resource path="res://scripts/hud.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 2 )

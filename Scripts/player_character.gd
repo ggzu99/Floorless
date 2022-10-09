@@ -113,8 +113,6 @@ func _physics_process(delta):
 		up_pressed=true
 	else:
 		up_pressed=false
-	if !movement_enabled:
-		horizontal_input=0
 	if dash_timer.is_stopped() and state==State.DASHING:
 		state=State.NORMAL
 	if state==State.DASHING:

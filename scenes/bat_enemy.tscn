@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/BatSprites/BatMovement.png" type="Texture" id=1]
 [ext_resource path="res://assets/BatSprites/BatDamagedColor.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/bat_enemy.gd" type="Script" id=3]
+[ext_resource path="res://scripts/bat_enemy.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0

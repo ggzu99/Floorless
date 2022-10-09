@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/pause_menu.gd" type="Script" id=1]
+[ext_resource path="res://scripts/pause_menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://scenes/ui/theme.tres" type="Theme" id=3]
 

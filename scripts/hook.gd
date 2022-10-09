@@ -2,7 +2,6 @@
 This script controls the hook.
 """
 extends Node2D
-onready var gun = $Gun
 onready var links = $Links		# A slightly easier reference to the links
 onready var length_timer = $LengthTimer
 var direction := Vector2(0,0)	# The direction in which the chain was shot

@@ -9,6 +9,7 @@ var lives = 6 setget set_lives
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lives = Game.player_lives
+	hearts.frame=6-lives
 
 func set_lives(value):
 	lives=value

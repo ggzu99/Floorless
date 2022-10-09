@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/Hook/basehookline.png" type="Texture" id=1]
 [ext_resource path="res://assets/Hook/hook.png" type="Texture" id=2]
-[ext_resource path="res://scenes/hook.gd" type="Script" id=3]
+[ext_resource path="res://scripts/hook.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 19.0
