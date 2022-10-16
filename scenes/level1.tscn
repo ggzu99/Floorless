@@ -297,4 +297,4 @@ light_mask = 0
 position = Vector2( 234, 552 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 94, 24 )
+position = Vector2( 95, 34 )

@@ -1,22 +1,21 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=7 format=2]
 
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
 [ext_resource path="res://assets/ui/PXUI-Basic/panel_Example1.png" type="Texture" id=3]
 
 [sub_resource type="StyleBoxTexture" id=9]
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 region_rect = Rect2( 27, 26, 396, 101 )
 modulate_color = Color( 0.831373, 0.772549, 0.380392, 1 )
 
 [sub_resource type="StyleBoxTexture" id=10]
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 region_rect = Rect2( 26, 26, 398, 101 )
 expand_margin_left = 12.0
 expand_margin_right = 20.0
 
 [sub_resource type="StyleBoxTexture" id=11]
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 region_rect = Rect2( 27, 26, 396, 101 )
 modulate_color = Color( 0.529412, 0.494118, 0.25098, 1 )
 
