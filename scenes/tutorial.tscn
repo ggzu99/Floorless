@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/TilesetBGpack/Cobble.png" type="Texture" id=1]
 [ext_resource path="res://scripts/spikes.gd" type="Script" id=2]
@@ -264,6 +264,8 @@ points = PoolVector2Array( 15.8888, 15.1706, 5.92926, 9.72087, 5.8358, 5.88885, 
 } ]
 3/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=50]
+
 [node name="Mundo" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -294,4 +296,11 @@ tile_data = PoolIntArray( -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0
 script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 116, 162 )
+position = Vector2( 120, 86 )
+
+[node name="ToLevel1" type="Area2D" parent="."]
+position = Vector2( 632, 90 )
+scale = Vector2( 5.91358, 5.71978 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToLevel1"]
+shape = SubResource( 50 )

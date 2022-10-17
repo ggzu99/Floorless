@@ -5,7 +5,8 @@ onready var hearts = $HBoxContainer/HP
 # var a = 2
 # var b = "text"
 var lives = 6 setget set_lives
-
+onready var animation_player = $PowerUpDisplay/AnimationPlayer
+onready var label = $PowerUpDisplay/PowerUpName
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lives = Game.player_lives
@@ -19,6 +20,10 @@ func set_lives(value):
 	else:
 		hearts.frame=6-lives
 	Game.player_lives=lives
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+
+func power_up_obtained(name:String):
+	label.text = name+" obtained!"
+	animation_player.play("visible")
+	yield(get_tree().create_timer(2),"timeout")
+	animation_player.play("not_visible")

@@ -6,6 +6,7 @@ onready var exit = $VBoxContainer/Exit
 
 
 func _ready():
+	Fade.level_enter()
 	play.connect("pressed", self, "_on_play_pressed")
 	credits.connect("pressed", self, "_on_credits_pressed")
 	exit.connect("pressed", self, "_on_exit_pressed")
@@ -13,7 +14,7 @@ func _ready():
 # var a = 2
 # var b = "text"
 func _on_play_pressed():
-	get_tree().change_scene("res://scenes/tutorial.tscn")
+	Fade.to_level("res://scenes/tutorial.tscn")
 
 
 func _on_credits_pressed():

@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Game="*res://scripts/Game.gd"
+Fade="*res://scenes/ui/fade_to_black.tscn"
 
 [display]
 

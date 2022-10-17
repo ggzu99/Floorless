@@ -10,7 +10,8 @@ const HOOK_PULL = 20
 enum State {
 	NORMAL,
 	DASHING,
-	HOOK_ACTIVE
+	HOOK_ACTIVE,
+	HOOKED
 }
 
 var state = State.NORMAL
@@ -25,6 +26,7 @@ var horizontal_input
 var vertical_input
 var last_dir=1
 var this_scene:String
+var can_air_jump = true
 
 onready var pivot = $Pivot
 onready var animation_player = $AnimationPlayer
@@ -52,6 +54,7 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("jump"):
 		wall_jump()
+		air_jump()
 	if event.is_action_pressed("dash") and dash_timer.is_stopped() and can_dash:
 		playback.travel("dash")
 		can_dash=false
@@ -65,7 +68,7 @@ func _input(event):
 	if event.is_action_pressed("hook") and hook_uses>0:
 		hook_uses-=1
 		if horizontal_input!=0 and vertical_input!=0:
-			hook.shoot(Vector2(horizontal_input,vertical_input/4))
+			hook.shoot(Vector2(horizontal_input,vertical_input*3/8))
 		elif horizontal_input==0 and vertical_input!=0:
 			hook.shoot(Vector2(0,vertical_input))
 		else:
@@ -82,25 +85,28 @@ func _physics_process(delta):
 		velocity.y=0
 	velocity = move_and_slide(velocity,Vector2.UP,true)
 	if hook.hooked:
-		state=State.HOOK_ACTIVE
 		# `to_local($Chain.tip).normalized()` is the direction that the chain is pulling
-		hook_velocity = to_local(hook.tip).normalized() * HOOK_PULL
-		if hook_velocity.y > 0:
-			# Pulling down isn't as strong
-			hook_velocity.y *= 0.55
+		print(self.global_position.distance_to(hook.tip))
+		if self.global_position.distance_to(hook.tip) > 18 and state!=State.HOOKED:
+			state=State.HOOK_ACTIVE
+			hook_velocity = to_local(hook.tip).normalized() * HOOK_PULL
+			if hook_velocity.y > 0:
+				# Pulling down isn't as strong
+				hook_velocity.y *= 0.7
+			else:
+				# Pulling up is stronger
+				hook_velocity.y *= 1.5
+			if sign(hook_velocity.x) != sign(horizontal_input):
+				# if we are trying to walk in a different
+				# direction than the hook is pulling
+				# reduce its pull
+				hook_velocity.x *= 0.7
 		else:
-			# Pulling up is stronger
-			hook_velocity.y *= 1.25
-		if sign(hook_velocity.x) != sign(horizontal_input):
-			# if we are trying to walk in a different
-			# direction than the hook is pulling
-			# reduce its pull
-			hook_velocity.x *= 0.7
+			state=State.HOOKED
 	else:
 		# Not hooked -> no hook velocity
 		hook_velocity = Vector2(0,0)
 	velocity += hook_velocity
-
 	horizontal_input = Input.get_axis("move_left","move_right")
 	if horizontal_input!=0:
 		last_dir=horizontal_input
@@ -129,7 +135,7 @@ func _physics_process(delta):
 	if dmg_timer.get_time_left()==0:
 		sprite.set_self_modulate(Color(1,1,1,1))
 		self.collision_mask=0b1111
-	if velocity.y < 180 and state!=State.DASHING:
+	if velocity.y < 180 and (state!=State.DASHING or state!=State.HOOKED):
 		velocity.y += GRAVITY
 	if not direction_modifier: pivot.rotation_degrees = 0.0
 	for i in get_slide_count():
@@ -137,7 +143,7 @@ func _physics_process(delta):
 		if dmg_timer.get_time_left()==0:
 			#Collide with spikes
 			if collisions[i].collider.collision_layer & 8:
-				take_damage(1)
+				take_damage(2)
 				bounce(collisions[i].position,true)
 			#Collide with enemies
 			if collisions[i].collider.collision_layer & 2:
@@ -147,6 +153,7 @@ func _physics_process(delta):
 	var real_wall = wall_and_not_enemy(collisions)
 	if is_on_wall() and real_wall and state==State.NORMAL:
 		hook_uses = 3
+		can_air_jump = true
 		if velocity.y>0:
 			if Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
 				can_dash=true
@@ -162,7 +169,7 @@ func _physics_process(delta):
 				pivot.scale.x=last_dir
 				if dash_timer.is_stopped(): playback.travel("fall")
 				
-	if not (is_on_wall()):
+	if not (is_on_wall()) or state==State.HOOKED:
 		if Input.is_action_pressed("move_left") and not (Input.is_action_pressed("move_right")) and dash_timer.is_stopped():
 			pivot.scale.x=-1
 		if Input.is_action_pressed("move_right") and not (Input.is_action_pressed("move_left")) and dash_timer.is_stopped():
@@ -185,6 +192,8 @@ func _physics_process(delta):
 		playback.travel("slash3")
 	gun.visible = hook.visible
 	gun.rotation = line.rotation - deg2rad(90)
+	if state==State.HOOKED:
+		velocity = Vector2(0,0)
 
 func wall_jump():
 	if is_on_wall() and movement_enabled:
@@ -194,7 +203,11 @@ func wall_jump():
 			velocity.x = -JUMP_SPEED
 		velocity.y = -JUMP_SPEED
 		turn_timer.start(0.04)
-	
+
+func air_jump():
+	if Game.air_jump and can_air_jump and not(is_on_wall()):
+		can_air_jump = false
+		velocity.y = -JUMP_SPEED*1.2
 
 func dash(direction):
 	dash_direction=direction
@@ -230,3 +243,6 @@ func wall_and_not_enemy(collisions):
 		if collision.collider.collision_layer & 2:
 			return false
 	return true
+
+func get_powerup(name:String):
+	hud.power_up_obtained(name)
