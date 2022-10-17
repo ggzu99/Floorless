@@ -86,7 +86,6 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity,Vector2.UP,true)
 	if hook.hooked:
 		# `to_local($Chain.tip).normalized()` is the direction that the chain is pulling
-		print(self.global_position.distance_to(hook.tip))
 		if self.global_position.distance_to(hook.tip) > 18 and state!=State.HOOKED:
 			state=State.HOOK_ACTIVE
 			hook_velocity = to_local(hook.tip).normalized() * HOOK_PULL
