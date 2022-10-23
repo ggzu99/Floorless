@@ -31,6 +31,7 @@ onready var scroll_container = $ScrollContainer
 
 
 func _ready():
+	Fade.level_enter()
 	for credit in credits:
 		var h_separator = HSeparator.new()
 		h_separator.theme_type_variation = "SmallHSeparator"
