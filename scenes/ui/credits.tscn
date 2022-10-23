@@ -1,0 +1,143 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/ui/theme.tres" type="Theme" id=1]
+
+[node name="MarginContainer" type="MarginContainer"]
+margin_right = 640.0
+margin_bottom = 359.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 640.0
+margin_bottom = 359.0
+
+[node name="CreditsContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 680.0
+margin_bottom = 716.0
+rect_pivot_offset = Vector2( -86, 124 )
+
+[node name="Label" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_right = 680.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+text = "Credits"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/CreditsContainer"]
+margin_top = 56.0
+margin_right = 680.0
+margin_bottom = 60.0
+
+[node name="Label2" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 64.0
+margin_right = 680.0
+margin_bottom = 116.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+text = "Assets"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/CreditsContainer"]
+margin_top = 120.0
+margin_right = 680.0
+margin_bottom = 124.0
+
+[node name="Label3" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 128.0
+margin_right = 680.0
+margin_bottom = 180.0
+theme = ExtResource( 1 )
+text = "m6x11"
+align = 1
+
+[node name="Label4" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 184.0
+margin_right = 680.0
+margin_bottom = 236.0
+theme = ExtResource( 1 )
+text = "https://managore.itch.io"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="ScrollContainer/CreditsContainer"]
+margin_top = 240.0
+margin_right = 680.0
+margin_bottom = 244.0
+
+[node name="Label5" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 248.0
+margin_right = 680.0
+margin_bottom = 300.0
+theme = ExtResource( 1 )
+text = "Bat Sprites"
+align = 1
+
+[node name="Label6" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 304.0
+margin_right = 680.0
+margin_bottom = 356.0
+theme = ExtResource( 1 )
+text = "https://rentro-ghost.itch.io"
+align = 1
+
+[node name="HSeparator4" type="HSeparator" parent="ScrollContainer/CreditsContainer"]
+margin_top = 360.0
+margin_right = 680.0
+margin_bottom = 364.0
+
+[node name="Label7" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 368.0
+margin_right = 680.0
+margin_bottom = 420.0
+theme = ExtResource( 1 )
+text = "Spikes"
+align = 1
+
+[node name="Label8" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 424.0
+margin_right = 680.0
+margin_bottom = 476.0
+theme = ExtResource( 1 )
+text = "https://omniclause.itch.io"
+align = 1
+
+[node name="HSeparator5" type="HSeparator" parent="ScrollContainer/CreditsContainer"]
+margin_top = 480.0
+margin_right = 680.0
+margin_bottom = 484.0
+
+[node name="Label9" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 488.0
+margin_right = 680.0
+margin_bottom = 540.0
+theme = ExtResource( 1 )
+text = "Rogue Knight"
+align = 1
+
+[node name="Label10" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 544.0
+margin_right = 680.0
+margin_bottom = 596.0
+theme = ExtResource( 1 )
+text = "https://darkpixel-kronovi.itch.io"
+align = 1
+
+[node name="HSeparator6" type="HSeparator" parent="ScrollContainer/CreditsContainer"]
+margin_top = 600.0
+margin_right = 680.0
+margin_bottom = 604.0
+
+[node name="Label11" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 608.0
+margin_right = 680.0
+margin_bottom = 660.0
+theme = ExtResource( 1 )
+text = "Tile set and BG pack - 16x16 Tilesets"
+align = 1
+
+[node name="Label12" type="Label" parent="ScrollContainer/CreditsContainer"]
+margin_top = 664.0
+margin_right = 680.0
+margin_bottom = 716.0
+theme = ExtResource( 1 )
+text = "https://biganon-1.itch.io"
+align = 1

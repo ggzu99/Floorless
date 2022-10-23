@@ -18,7 +18,7 @@ func _on_play_pressed():
 
 
 func _on_credits_pressed():
-	print("· o ·)")
+	Fade.to_level("res://scenes/ui/credits.tscn")
 
 
 func _on_exit_pressed():
