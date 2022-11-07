@@ -18,6 +18,10 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("pause"):
 		pause_menu.visible = !pause_menu.visible
+		if (pause_menu.visible):
+			pause_menu.resume.grab_focus()
+		else:
+			pause_menu.resume.release_focus()
 		get_tree().paused = pause_menu.visible
 
 

@@ -10,6 +10,8 @@ func _ready():
 	play.connect("pressed", self, "_on_play_pressed")
 	credits.connect("pressed", self, "_on_credits_pressed")
 	exit.connect("pressed", self, "_on_exit_pressed")
+	play.grab_focus()
+	exit.release_focus()
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
