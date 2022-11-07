@@ -17,7 +17,7 @@ func _on_resume_pressed():
 	visible = false
 
 func _on_main_menu_pressed():
-	Game.player_lives=Game.default_lives
+	Game.reset_defaults()
 	Fade.to_level("res://scenes/ui/main_menu.tscn")
 	get_tree().paused = false
 
