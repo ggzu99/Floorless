@@ -1,12 +1,12 @@
 extends Node2D
 
-onready var player = $Player/Player_Character
+onready var player = $Player
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 var blocks_gone = false
 onready var fake_blocks = $FakeBlocks/AnimationPlayer
-onready var camera = $Player/Player_Character/Camera2D
+onready var camera = $Player/Camera2D
 onready var to_level2 = $ToLevel2
 # Called when the node enters the scene tree for the first time.
 func _ready():

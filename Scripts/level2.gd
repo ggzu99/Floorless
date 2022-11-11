@@ -1,7 +1,7 @@
 extends Node2D
 
-onready var player = $Player/Player_Character
-onready var camera = $Player/Player_Character/Camera2D
+onready var player = $Player
+onready var camera = $Player/Camera2D
 onready var to_level1 = $ToLevel1
 
 # Called when the node enters the scene tree for the first time.

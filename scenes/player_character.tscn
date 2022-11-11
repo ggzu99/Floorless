@@ -1,9 +1,10 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player_character.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui/player_ui.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/sword.gd" type="Script" id=4]
+[ext_resource path="res://scenes/hook_particles.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/hook.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/Hook/basegun.png" type="Texture" id=7]
 
@@ -1020,41 +1021,40 @@ graph_offset = Vector2( 218.098, 31.4742 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
-[node name="Node2D" type="Node2D"]
-
-[node name="Player_Character" type="KinematicBody2D" parent="."]
+[node name="Player_Character" type="KinematicBody2D"]
 collision_mask = 12
 script = ExtResource( 2 )
+hook_particles_scene = ExtResource( 5 )
 
-[node name="Pivot" type="Node2D" parent="Player_Character"]
+[node name="Pivot" type="Node2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="Player_Character/Pivot"]
+[node name="Sprite" type="Sprite" parent="Pivot"]
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 9
 region_enabled = true
 region_rect = Rect2( 0, 0, 500, 333 )
 
-[node name="Gun" type="Sprite" parent="Player_Character/Pivot"]
+[node name="Gun" type="Sprite" parent="Pivot"]
 position = Vector2( 13, -1 )
 scale = Vector2( 0.46094, 0.470534 )
 texture = ExtResource( 7 )
 
-[node name="Sword" type="Area2D" parent="Player_Character/Pivot"]
+[node name="Sword" type="Area2D" parent="Pivot"]
 collision_layer = 128
 collision_mask = 14
 script = ExtResource( 4 )
 
-[node name="SwordHbox" type="CollisionShape2D" parent="Player_Character/Pivot/Sword"]
+[node name="SwordHbox" type="CollisionShape2D" parent="Pivot/Sword"]
 position = Vector2( -1, -5 )
 scale = Vector2( 2.32, 1.88 )
 shape = SubResource( 85 )
 disabled = true
 
-[node name="KnockbackTimer" type="Timer" parent="Player_Character/Pivot/Sword"]
+[node name="KnockbackTimer" type="Timer" parent="Pivot/Sword"]
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player_Character"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Pivot/Sprite")
 anims/RESET = SubResource( 2 )
 anims/dash = SubResource( 3 )
@@ -1073,24 +1073,24 @@ anims/slash3 = SubResource( 13 )
 anims/wall_slide = SubResource( 92 )
 anims/wield_sword = SubResource( 14 )
 
-[node name="AnimationTree" type="AnimationTree" parent="Player_Character"]
+[node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 39 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 40 )
 
-[node name="DamageTimer" type="Timer" parent="Player_Character"]
+[node name="DamageTimer" type="Timer" parent="."]
 process_mode = 0
 one_shot = true
 
-[node name="DashTimer" type="Timer" parent="Player_Character"]
+[node name="DashTimer" type="Timer" parent="."]
 process_mode = 0
 wait_time = 0.5
 one_shot = true
 
-[node name="TurnaroundTimer" type="Timer" parent="Player_Character"]
+[node name="TurnaroundTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Camera2D" type="Camera2D" parent="Player_Character"]
+[node name="Camera2D" type="Camera2D" parent="."]
 current = true
 process_mode = 0
 limit_left = 0
@@ -1099,11 +1099,11 @@ drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 editor_draw_drag_margin = true
 
-[node name="Hitbox" type="CollisionShape2D" parent="Player_Character"]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Hook" parent="Player_Character" instance=ExtResource( 6 )]
+[node name="Hook" parent="." instance=ExtResource( 6 )]
 position = Vector2( -1, 0 )
 scale = Vector2( 0.25, 0.25 )
 
-[node name="PlayerUI" parent="Player_Character" instance=ExtResource( 3 )]
+[node name="PlayerUI" parent="." instance=ExtResource( 3 )]

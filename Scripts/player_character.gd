@@ -39,16 +39,19 @@ onready var hud = $PlayerUI/HUD
 onready var turn_timer = $TurnaroundTimer
 onready var hook = $Hook
 onready var line = $Hook/Links
+onready var hook_tip = $Hook/Tip
 onready var gun = $Pivot/Gun
 export(bool) var movement_enabled = true
 export(bool) var slash1 = false
 export(bool) var slash2 = false
 export(bool) var slash3 = false
 export(bool) var direction_modifier = false
+export(PackedScene) var hook_particles_scene
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_tree.active = true
 	playback.travel("fall")
+	hook.connect("hooked",self,"_on_hooked")
 
 #Function that takes inputs
 func _input(event):
@@ -104,6 +107,7 @@ func _physics_process(delta):
 			state=State.HOOKED
 	else:
 		# Not hooked -> no hook velocity
+	
 		hook_velocity = Vector2(0,0)
 	velocity += hook_velocity
 	horizontal_input = Input.get_axis("move_left","move_right")
@@ -245,3 +249,9 @@ func wall_and_not_enemy(collisions):
 
 func get_powerup(name:String):
 	hud.power_up_obtained(name)
+
+func _on_hooked():
+	var hook_particles = hook_particles_scene.instance()
+	get_parent().add_child(hook_particles)
+	hook_particles.global_position = hook_tip.global_position
+	hook_particles.rotation = hook_tip.rotation

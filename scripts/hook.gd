@@ -12,7 +12,7 @@ var tip := Vector2(0,0)			# The global position the tip should be in
 								# moves.
 
 const SPEED = 8.5	# The speed with which the chain moves
-
+signal hooked
 var flying = false	# Whether the chain is moving through the air
 var hooked = false	# Whether the chain has connected to a wall
 
@@ -54,6 +54,7 @@ func _physics_process(_delta: float) -> void:
 			if collision_shape:
 				if collision_shape.collider.collision_layer & 4:
 					hooked = true	# Got something!
+					emit_signal("hooked")
 					flying = false	# Not flying anymore
 				else:
 					release()
