@@ -86,6 +86,7 @@ func _input(event):
 			if down_pressed or up_pressed: direction_modifier=true
 		if event.is_action_released("slash") and is_charging:
 			is_charging = false
+			if down_pressed or up_pressed: direction_modifier=true
 			charge_startup.stop()
 			if charge_timer.is_stopped() and Game.charge_slash:
 				charge_slash = true

@@ -13,3 +13,4 @@ func change_scene(scene:String, new_player_pos:Vector2):
 func reset_defaults():
 	player_lives = default_lives
 	air_jump = false
+	charge_slash = false

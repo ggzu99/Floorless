@@ -9,6 +9,7 @@ onready var sprite_anim = $Switch/SwitchPlayer
 onready var tile_anim = $Switch/TileMap2/TilePlayer
 # Called when the node enters the scene tree for the first time.
 
+
 func activate():
 	sprite_anim.play("fade")
 	tile_anim.play("fade")

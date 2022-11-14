@@ -14,7 +14,7 @@ func _ready():
 	player.this_scene = "res://scenes/level2.tscn"
 
 func _on_body_entered1(_body:Node):
-	Game.change_scene("res://scenes/level1.tscn",Vector2(976,824))
+	Game.change_scene("res://scenes/level1.tscn",Vector2(1100,824))
 
 func _on_body_entered2(_body:Node):
-	Game.change_scene("res://scenes/level1.tscn",Vector2(1104,88))
+	Game.change_scene("res://scenes/level1.tscn",Vector2(1104,80))

@@ -17,7 +17,7 @@ func _ready():
 	Fade.level_enter()
 	to_level2_lower.connect("body_entered",self,"_on_body_entered1")
 	to_level2_upper.connect("body_entered",self,"_on_body_entered2")
-	camera.limit_right = 1120
+	camera.limit_right = 1232
 	player.this_scene = "res://scenes/level1.tscn"
 	if not(blocks_gone):
 		camera.limit_bottom = 796

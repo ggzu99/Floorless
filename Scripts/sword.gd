@@ -14,12 +14,15 @@ var charge_slash = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect("body_entered", self, "_on_body_entered")
+	connect("area_entered",self, "_on_area_entered")
 	player.connect("do_charge_slash", self, "_on_charge_slash")
 	cut_animation.connect("animation_finished", self, "_on_animation_finished")
 	
+func _on_area_entered(area: Node):
+	if area.collision_layer & 16:
+		area.activate()
+	
 func _on_body_entered(body: Node):
-	if body.collision_layer & 16:
-		body.activate()
 	if body.has_method("take_damage"):
 		player.hook_uses = 3
 		if charge_slash:
