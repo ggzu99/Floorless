@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player_character.gd" type="Script" id=2]
@@ -7,11 +7,81 @@
 [ext_resource path="res://scenes/hook_particles.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/hook.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/Hook/basegun.png" type="Texture" id=7]
+[ext_resource path="res://assets/ChargeSlash/charge_slash.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=85]
 extents = Vector2( 10.9914, 9.30851 )
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="Animation" id=104]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=105]
+resource_name = "cut"
+length = 0.5
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 6, 6, 5, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="ParticlesMaterial" id=1]
+flag_align_y = true
+flag_rotate_y = true
+flag_disable_z = true
+direction = Vector3( 1, 2, 0 )
+spread = 39.21
+flatness = 0.74
+gravity = Vector3( 0, 200, 0 )
+initial_velocity = 60.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+color = Color( 0.211765, 0.196078, 0.278431, 1 )
+
+[sub_resource type="Curve" id=101]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.169318 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=102]
+curve = SubResource( 101 )
+
+[sub_resource type="ParticlesMaterial" id=103]
+emission_shape = 5
+emission_ring_radius = 0.01
+emission_ring_inner_radius = 0.0
+emission_ring_height = 1.0
+emission_ring_axis = Vector3( 0, 0, 1 )
+flag_align_y = true
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -200.0
+scale = 2.0
+scale_curve = SubResource( 102 )
+color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CapsuleShape2D" id=96]
 height = 14.0
 
 [sub_resource type="Animation" id=2]
@@ -50,7 +120,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../../Hitbox:position")
@@ -136,6 +206,94 @@ tracks/9/keys = {
 "update": 0,
 "values": [ NodePath("../Pivot/Sprite") ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath(".:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=97]
+resource_name = "charge_slash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 42, 43, 44, 45, 46 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sword/SwordHbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sword/SwordHbox:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 4, 1.88 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sword/SwordHbox:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 15, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.85098, 0.45098, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../..:charge_slash")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "dash"
@@ -176,7 +334,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../../Hitbox:position")
@@ -258,7 +416,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("../../Hitbox:position")
@@ -299,7 +457,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../../Hitbox:position")
@@ -382,7 +540,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../../Hitbox:shape:height")
@@ -422,7 +580,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../../Hitbox:position")
@@ -463,7 +621,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../../Hitbox:position")
@@ -504,7 +662,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../../Hitbox:position")
@@ -545,7 +703,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 1 ) ]
+"values": [ SubResource( 96 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../../Hitbox:position")
@@ -647,6 +805,20 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("../Sword/ChargeTimer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.25 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 1 ],
+"method": "start"
+} ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -838,6 +1010,9 @@ tracks/0/keys = {
 "values": [ 40, 41, 42 ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=98]
+animation = "charge_slash"
+
 [sub_resource type="AnimationNodeAnimation" id=59]
 animation = "dash"
 
@@ -986,7 +1161,15 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=95]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=99]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=100]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id=39]
+states/charge_slash/node = SubResource( 98 )
+states/charge_slash/position = Vector2( 1475.61, -32.2536 )
 states/dash/node = SubResource( 59 )
 states/dash/position = Vector2( 1726.35, 278.15 )
 states/dash_end/node = SubResource( 72 )
@@ -1014,10 +1197,10 @@ states/slash3/position = Vector2( 2087.97, 300.88 )
 states/wall_slide/node = SubResource( 19 )
 states/wall_slide/position = Vector2( 545, 397 )
 states/wield_sword/node = SubResource( 21 )
-states/wield_sword/position = Vector2( 1257, 53 )
-transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "wall_slide", "idle", SubResource( 33 ), "wall_slide", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "wall_slide", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "jump_start", SubResource( 58 ), "jump_start", "wield_sword", SubResource( 68 ), "sheathe_sword", "jump_start", SubResource( 69 ), "jump_start", "dash_start", SubResource( 74 ), "fall", "dash_start", SubResource( 75 ), "run", "dash_start", SubResource( 76 ), "sheathe_sword", "dash_start", SubResource( 77 ), "jump", "dash_start", SubResource( 78 ), "dash_start", "dash", SubResource( 79 ), "dash", "dash_end", SubResource( 80 ), "dash_end", "jump", SubResource( 81 ), "dash_end", "fall", SubResource( 82 ), "dash_end", "wall_slide", SubResource( 83 ), "dash_end", "jump_start", SubResource( 84 ), "slash1", "slash2", SubResource( 88 ), "slash2", "sheathe_sword", SubResource( 89 ), "slash2", "slash3", SubResource( 90 ), "slash3", "sheathe_sword", SubResource( 91 ), "wall_slide", "jump_start", SubResource( 93 ), "fall", "wall_slide", SubResource( 94 ), "wall_slide", "fall", SubResource( 95 ) ]
+states/wield_sword/position = Vector2( 1264, 48 )
+transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "wall_slide", "idle", SubResource( 33 ), "wall_slide", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "wall_slide", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "jump_start", SubResource( 58 ), "jump_start", "wield_sword", SubResource( 68 ), "sheathe_sword", "jump_start", SubResource( 69 ), "jump_start", "dash_start", SubResource( 74 ), "fall", "dash_start", SubResource( 75 ), "run", "dash_start", SubResource( 76 ), "sheathe_sword", "dash_start", SubResource( 77 ), "jump", "dash_start", SubResource( 78 ), "dash_start", "dash", SubResource( 79 ), "dash", "dash_end", SubResource( 80 ), "dash_end", "jump", SubResource( 81 ), "dash_end", "fall", SubResource( 82 ), "dash_end", "wall_slide", SubResource( 83 ), "dash_end", "jump_start", SubResource( 84 ), "slash1", "slash2", SubResource( 88 ), "slash2", "sheathe_sword", SubResource( 89 ), "slash2", "slash3", SubResource( 90 ), "slash3", "sheathe_sword", SubResource( 91 ), "wall_slide", "jump_start", SubResource( 93 ), "fall", "wall_slide", SubResource( 94 ), "wall_slide", "fall", SubResource( 95 ), "wield_sword", "charge_slash", SubResource( 99 ), "charge_slash", "sheathe_sword", SubResource( 100 ) ]
 start_node = "fall"
-graph_offset = Vector2( 218.098, 31.4742 )
+graph_offset = Vector2( 449.449, -69.6043 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -1035,6 +1218,9 @@ vframes = 9
 region_enabled = true
 region_rect = Rect2( 0, 0, 500, 333 )
 
+[node name="ModulateTween" type="Tween" parent="Pivot/Sprite"]
+playback_process_mode = 0
+
 [node name="Gun" type="Sprite" parent="Pivot"]
 position = Vector2( 13, -1 )
 scale = Vector2( 0.46094, 0.470534 )
@@ -1042,7 +1228,7 @@ texture = ExtResource( 7 )
 
 [node name="Sword" type="Area2D" parent="Pivot"]
 collision_layer = 128
-collision_mask = 14
+collision_mask = 30
 script = ExtResource( 4 )
 
 [node name="SwordHbox" type="CollisionShape2D" parent="Pivot/Sword"]
@@ -1054,9 +1240,49 @@ disabled = true
 [node name="KnockbackTimer" type="Timer" parent="Pivot/Sword"]
 one_shot = true
 
+[node name="ChargeTimer" type="Timer" parent="Pivot/Sword"]
+process_mode = 0
+one_shot = true
+
+[node name="ChargeStartup" type="Timer" parent="Pivot/Sword"]
+wait_time = 0.2
+one_shot = true
+
+[node name="ChargeCut" type="Sprite" parent="Pivot/Sword"]
+visible = false
+position = Vector2( 20, 0 )
+scale = Vector2( 1, 0.5 )
+texture = ExtResource( 8 )
+hframes = 8
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Pivot/Sword"]
+root_node = NodePath("../ChargeCut")
+anims/RESET = SubResource( 104 )
+anims/cut = SubResource( 105 )
+
+[node name="WallParticles" type="Particles2D" parent="Pivot"]
+position = Vector2( -11, -10 )
+emitting = false
+amount = 30
+lifetime = 0.6
+explosiveness = 0.33
+randomness = 0.14
+local_coords = false
+process_material = SubResource( 1 )
+
+[node name="ChargeParticles" type="Particles2D" parent="Pivot"]
+emitting = false
+amount = 20
+speed_scale = 1.5
+process_material = SubResource( 103 )
+
+[node name="ChargeTween" type="Tween" parent="Pivot/ChargeParticles"]
+playback_process_mode = 0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Pivot/Sprite")
 anims/RESET = SubResource( 2 )
+anims/charge_slash = SubResource( 97 )
 anims/dash = SubResource( 3 )
 anims/dash_end = SubResource( 70 )
 anims/dash_start = SubResource( 71 )
@@ -1100,7 +1326,7 @@ drag_margin_v_enabled = true
 editor_draw_drag_margin = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 96 )
 
 [node name="Hook" parent="." instance=ExtResource( 6 )]
 position = Vector2( -1, 0 )

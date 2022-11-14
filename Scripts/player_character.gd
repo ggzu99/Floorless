@@ -14,6 +14,7 @@ enum State {
 	HOOKED
 }
 
+var color_time_count = 0.0
 var state = State.NORMAL
 var velocity = Vector2()
 var hook_velocity = Vector2(0,0)
@@ -26,7 +27,10 @@ var horizontal_input
 var vertical_input
 var last_dir=1
 var this_scene:String
+var iframes = false
 var can_air_jump = true
+
+signal do_charge_slash
 
 onready var pivot = $Pivot
 onready var animation_player = $AnimationPlayer
@@ -35,23 +39,36 @@ onready var playback = animation_tree.get("parameters/playback")
 onready var sprite = $Pivot/Sprite
 onready var dmg_timer = $DamageTimer
 onready var dash_timer = $DashTimer
+onready var sword = $Pivot/Sword
+onready var charge_timer = $Pivot/Sword/ChargeTimer
+onready var charge_startup = $Pivot/Sword/ChargeStartup
 onready var hud = $PlayerUI/HUD
 onready var turn_timer = $TurnaroundTimer
 onready var hook = $Hook
 onready var line = $Hook/Links
 onready var hook_tip = $Hook/Tip
 onready var gun = $Pivot/Gun
+onready var wall_particles = $Pivot/WallParticles
+onready var charge_particles = $Pivot/ChargeParticles
+onready var charge_particles_material = $Pivot/ChargeParticles.process_material
+onready var modulate_tween = $Pivot/Sprite/ModulateTween
+onready var charge_particle_tween = $Pivot/ChargeParticles/ChargeTween
 export(bool) var movement_enabled = true
 export(bool) var slash1 = false
 export(bool) var slash2 = false
 export(bool) var slash3 = false
+export(bool) var charge_slash = false
 export(bool) var direction_modifier = false
+export(bool) var is_charging = false
 export(PackedScene) var hook_particles_scene
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_tree.active = true
 	playback.travel("fall")
 	hook.connect("hooked",self,"_on_hooked")
+	charge_startup.connect("timeout",self,"_on_charge_startup")
+	charge_timer.connect("timeout",self,"_on_charge_complete")
+	
 
 #Function that takes inputs
 func _input(event):
@@ -63,11 +80,20 @@ func _input(event):
 		can_dash=false
 		dash(last_dir)
 	if movement_enabled and dash_timer.is_stopped():
-		if event.is_action_pressed("slash") and (down_pressed or up_pressed):
+		if event.is_action_pressed("slash"):
 			slash()
-			direction_modifier=true
-		elif event.is_action_pressed("slash"):
-			slash()
+			if Game.charge_slash: charge_startup.start(1)
+			if down_pressed or up_pressed: direction_modifier=true
+		if event.is_action_released("slash") and is_charging:
+			is_charging = false
+			charge_startup.stop()
+			if charge_timer.is_stopped() and Game.charge_slash:
+				charge_slash = true
+				charge_particles.emitting = false
+				emit_signal("do_charge_slash")
+				charge_particles_material.emission_ring_radius = 0.01
+				charge_particles_material.emission_ring_inner_radius = 0
+				charge_particles_material.color = Color(0,0,0,1)
 	if event.is_action_pressed("hook") and hook_uses>0:
 		hook_uses-=1
 		if horizontal_input!=0 and vertical_input!=0:
@@ -80,7 +106,7 @@ func _input(event):
 		hook.release()
 		state = State.NORMAL
 			
-		
+
 			
 func _physics_process(delta):
 	var collisions = []
@@ -107,7 +133,6 @@ func _physics_process(delta):
 			state=State.HOOKED
 	else:
 		# Not hooked -> no hook velocity
-	
 		hook_velocity = Vector2(0,0)
 	velocity += hook_velocity
 	horizontal_input = Input.get_axis("move_left","move_right")
@@ -122,6 +147,10 @@ func _physics_process(delta):
 		up_pressed=true
 	else:
 		up_pressed=false
+	if !Input.is_action_pressed("slash"):
+		charge_startup.stop()
+		is_charging = false
+		charge_timer.stop()
 	if dash_timer.is_stopped() and state==State.DASHING:
 		state=State.NORMAL
 	if state==State.DASHING:
@@ -131,13 +160,24 @@ func _physics_process(delta):
 	#Taking damage
 	if dmg_timer.get_time_left()>0:
 		self.collision_mask=0b1101
-		if sprite.get_self_modulate()==Color(1,1,1,1):
-			sprite.set_self_modulate(Color(1,1,1,0))
+		if iframes:
+			sprite.self_modulate.a = 0
+			iframes = !iframes
 		else:
-			sprite.set_self_modulate(Color(1,1,1,1))
+			iframes = !iframes
+			sprite.self_modulate.a = 1
 	if dmg_timer.get_time_left()==0:
-		sprite.set_self_modulate(Color(1,1,1,1))
+		sprite.self_modulate.a = 1
+		iframes = false
 		self.collision_mask=0b1111
+	if !is_charging and !charge_slash:
+		charge_particles.emitting = false
+		charge_particles_material.emission_ring_radius = 0.01
+		charge_particles_material.emission_ring_inner_radius = 0
+		sprite.self_modulate.r = 1
+		sprite.self_modulate.g = 1
+		sprite.self_modulate.b = 1
+		charge_particles_material.color = Color(0,0,0,1)
 	if velocity.y < 180 and (state!=State.DASHING or state!=State.HOOKED):
 		velocity.y += GRAVITY
 	if not direction_modifier: pivot.rotation_degrees = 0.0
@@ -162,16 +202,22 @@ func _physics_process(delta):
 				can_dash=true
 				pivot.scale.x=-1
 				velocity.y = 100
-				if dash_timer.is_stopped(): playback.travel("wall_slide")
+				if dash_timer.is_stopped(): 
+					playback.travel("wall_slide")
+					wall_particles.emitting = true
 			elif Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 				can_dash=true
 				pivot.scale.x=1
 				velocity.y = 100
-				if dash_timer.is_stopped(): playback.travel("wall_slide")
+				if dash_timer.is_stopped(): 
+					playback.travel("wall_slide")
+					wall_particles.emitting = true
 			else:
+				wall_particles.emitting = false
 				pivot.scale.x=last_dir
 				if dash_timer.is_stopped(): playback.travel("fall")
-				
+	else:
+		wall_particles.emitting = false
 	if not (is_on_wall()) or state==State.HOOKED:
 		if Input.is_action_pressed("move_left") and not (Input.is_action_pressed("move_right")) and dash_timer.is_stopped():
 			pivot.scale.x=-1
@@ -193,6 +239,8 @@ func _physics_process(delta):
 		playback.travel("slash2")
 	if slash3:
 		playback.travel("slash3")
+	if charge_slash:
+		playback.travel("charge_slash")
 	gun.visible = hook.visible
 	gun.rotation = line.rotation - deg2rad(90)
 	if state==State.HOOKED:
@@ -227,6 +275,7 @@ func slash():
 	if not slash1 and slash2 and not slash3:
 			slash3=true
 
+
 func bounce(origin:Vector2,with_floor=false):
 	var mult=1.5
 	var direction = (global_position - origin).normalized()
@@ -240,6 +289,9 @@ func take_damage(value):
 		hud.lives=Game.default_lives
 		get_tree().change_scene(this_scene)
 	dmg_timer.start(1)
+	iframes = true
+	is_charging = false
+	charge_timer.stop()
 
 func wall_and_not_enemy(collisions):
 	for collision in collisions:
@@ -255,3 +307,17 @@ func _on_hooked():
 	get_parent().add_child(hook_particles)
 	hook_particles.global_position = hook_tip.global_position
 	hook_particles.rotation = hook_tip.rotation
+
+func _on_charge_startup():
+	charge_timer.start(1)
+	is_charging = true
+	charge_particles.emitting = true
+	charge_particle_tween.interpolate_property(charge_particles_material,"emission_ring_radius",charge_particles_material.emission_ring_radius,50,1,Tween.TRANS_LINEAR,Tween.EASE_IN)
+	charge_particle_tween.interpolate_property(charge_particles_material,"emission_ring_inner_radius",charge_particles_material.emission_ring_inner_radius,20,1,Tween.TRANS_LINEAR,Tween.EASE_IN)
+	charge_particle_tween.interpolate_property(charge_particles_material,"color",charge_particles_material.color,Color8(255,255,255,255),0.5,Tween.TRANS_LINEAR,Tween.EASE_IN)
+	charge_particle_tween.start()
+	modulate_tween.interpolate_property(sprite,"self_modulate",sprite.self_modulate,Color8(255,217,115,sprite.self_modulate.a8),1,Tween.TRANS_LINEAR,Tween.EASE_IN)
+	modulate_tween.start()
+
+func _on_charge_complete():
+	charge_particles_material.color = Color8(255,217,115,255)

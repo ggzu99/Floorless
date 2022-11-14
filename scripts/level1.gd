@@ -7,14 +7,16 @@ onready var player = $Player
 var blocks_gone = false
 onready var fake_blocks = $FakeBlocks/AnimationPlayer
 onready var camera = $Player/Camera2D
-onready var to_level2 = $ToLevel2
+onready var to_level2_lower = $ToLevel2Lower
+onready var to_level2_upper = $ToLevel2Upper
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player.global_position = Game.player_position
 	if player.global_position.y > 720:
 		player.pivot.scale.x = -1
 	Fade.level_enter()
-	to_level2.connect("body_entered",self,"_on_body_entered")
+	to_level2_lower.connect("body_entered",self,"_on_body_entered1")
+	to_level2_upper.connect("body_entered",self,"_on_body_entered2")
 	camera.limit_right = 1120
 	player.this_scene = "res://scenes/level1.tscn"
 	if not(blocks_gone):
@@ -28,5 +30,8 @@ func _process(delta):
 			blocks_gone = true
 		
 
-func _on_body_entered(body:Node):
+func _on_body_entered1(body:Node):
 	Game.change_scene("res://scenes//level2.tscn",Vector2(88,525))
+
+func _on_body_entered2(body:Node):
+	Game.change_scene("res://scenes//level2.tscn",Vector2(75,75))

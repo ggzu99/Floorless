@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/Ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
 [ext_resource path="res://assets/ui/PXUI-Basic/panel_Example1.png" type="Texture" id=3]
 
 [sub_resource type="StyleBoxTexture" id=8]
