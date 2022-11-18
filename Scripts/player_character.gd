@@ -44,10 +44,11 @@ onready var charge_timer = $Pivot/Sword/ChargeTimer
 onready var charge_startup = $Pivot/Sword/ChargeStartup
 onready var hud = $PlayerUI/HUD
 onready var turn_timer = $TurnaroundTimer
-onready var hook = $Hook
-onready var line = $Hook/Links
-onready var hook_tip = $Hook/Tip
-onready var gun = $Pivot/Gun
+onready var hook = $Pivot/Hook
+onready var line = $Pivot/Hook/Links
+onready var hook_tip = $Pivot/Hook/Tip
+onready var gun = $Pivot/HookPivot/Gun
+onready var hook_pivot = $Pivot/HookPivot
 onready var wall_particles = $Pivot/WallParticles
 onready var charge_particles = $Pivot/ChargeParticles
 onready var charge_particles_material = $Pivot/ChargeParticles.process_material
@@ -225,9 +226,11 @@ func _physics_process(delta):
 		if Input.is_action_pressed("move_right") and not (Input.is_action_pressed("move_left")) and dash_timer.is_stopped():
 			pivot.scale.x=1
 		if velocity.y>0:
-			if state!=State.DASHING: playback.travel("fall")
+			if real_wall and state==State.HOOKED and not(hook_tip.is_on_ceiling()): playback.travel("wall_hooked")
+			elif state!=State.DASHING: playback.travel("fall")
 	if velocity.y<0:
-		if state!=State.DASHING: playback.travel("jump")
+		if real_wall and state==State.HOOKED and not(hook_tip.is_on_ceiling()): playback.travel("wall_hooked")
+		elif state!=State.DASHING: playback.travel("jump")
 	if down_pressed and direction_modifier:
 		if pivot.scale.x==1: pivot.rotation_degrees=90
 		else: pivot.rotation_degrees=-90
@@ -243,7 +246,7 @@ func _physics_process(delta):
 	if charge_slash:
 		playback.travel("charge_slash")
 	gun.visible = hook.visible
-	gun.rotation = line.rotation - deg2rad(90)
+	hook_pivot.rotation = line.rotation - deg2rad(90)
 	if state==State.HOOKED:
 		velocity = Vector2(0,0)
 

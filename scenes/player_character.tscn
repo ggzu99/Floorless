@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=2]
+[gd_scene load_steps=100 format=2]
 
 [ext_resource path="res://assets/RogueKnight/Fullmain.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player_character.gd" type="Script" id=2]
@@ -975,6 +975,24 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=106]
+resource_name = "wall_hooked"
+length = 0.4
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
 [sub_resource type="Animation" id=92]
 resource_name = "wall_slide"
 length = 0.4
@@ -1048,6 +1066,9 @@ animation = "slash2"
 
 [sub_resource type="AnimationNodeAnimation" id=87]
 animation = "slash3"
+
+[sub_resource type="AnimationNodeAnimation" id=107]
+animation = "wall_hooked"
 
 [sub_resource type="AnimationNodeAnimation" id=19]
 animation = "wall_slide"
@@ -1167,6 +1188,12 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=100]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=108]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=109]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=110]
+
 [sub_resource type="AnimationNodeStateMachine" id=39]
 states/charge_slash/node = SubResource( 98 )
 states/charge_slash/position = Vector2( 1475.61, -32.2536 )
@@ -1194,13 +1221,15 @@ states/slash2/node = SubResource( 86 )
 states/slash2/position = Vector2( 2097.97, 179.88 )
 states/slash3/node = SubResource( 87 )
 states/slash3/position = Vector2( 2087.97, 300.88 )
+states/wall_hooked/node = SubResource( 107 )
+states/wall_hooked/position = Vector2( 1011.12, 502.255 )
 states/wall_slide/node = SubResource( 19 )
 states/wall_slide/position = Vector2( 545, 397 )
 states/wield_sword/node = SubResource( 21 )
 states/wield_sword/position = Vector2( 1264, 48 )
-transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "wall_slide", "idle", SubResource( 33 ), "wall_slide", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "wall_slide", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "jump_start", SubResource( 58 ), "jump_start", "wield_sword", SubResource( 68 ), "sheathe_sword", "jump_start", SubResource( 69 ), "jump_start", "dash_start", SubResource( 74 ), "fall", "dash_start", SubResource( 75 ), "run", "dash_start", SubResource( 76 ), "sheathe_sword", "dash_start", SubResource( 77 ), "jump", "dash_start", SubResource( 78 ), "dash_start", "dash", SubResource( 79 ), "dash", "dash_end", SubResource( 80 ), "dash_end", "jump", SubResource( 81 ), "dash_end", "fall", SubResource( 82 ), "dash_end", "wall_slide", SubResource( 83 ), "dash_end", "jump_start", SubResource( 84 ), "slash1", "slash2", SubResource( 88 ), "slash2", "sheathe_sword", SubResource( 89 ), "slash2", "slash3", SubResource( 90 ), "slash3", "sheathe_sword", SubResource( 91 ), "wall_slide", "jump_start", SubResource( 93 ), "fall", "wall_slide", SubResource( 94 ), "wall_slide", "fall", SubResource( 95 ), "wield_sword", "charge_slash", SubResource( 99 ), "charge_slash", "sheathe_sword", SubResource( 100 ) ]
+transitions = [ "idle", "run", SubResource( 22 ), "run", "idle", SubResource( 23 ), "idle", "jump_start", SubResource( 24 ), "run", "jump_start", SubResource( 25 ), "run", "wield_sword", SubResource( 26 ), "idle", "wield_sword", SubResource( 27 ), "jump_start", "jump", SubResource( 28 ), "idle", "fall", SubResource( 29 ), "run", "fall", SubResource( 30 ), "jump", "fall", SubResource( 31 ), "wall_slide", "idle", SubResource( 33 ), "wall_slide", "run", SubResource( 34 ), "jump", "wield_sword", SubResource( 35 ), "fall", "wield_sword", SubResource( 37 ), "wield_sword", "slash1", SubResource( 44 ), "slash1", "sheathe_sword", SubResource( 45 ), "sheathe_sword", "jump", SubResource( 46 ), "sheathe_sword", "fall", SubResource( 47 ), "sheathe_sword", "wall_slide", SubResource( 48 ), "sheathe_sword", "idle", SubResource( 49 ), "sheathe_sword", "run", SubResource( 50 ), "fall", "jump_start", SubResource( 58 ), "jump_start", "wield_sword", SubResource( 68 ), "sheathe_sword", "jump_start", SubResource( 69 ), "jump_start", "dash_start", SubResource( 74 ), "fall", "dash_start", SubResource( 75 ), "run", "dash_start", SubResource( 76 ), "sheathe_sword", "dash_start", SubResource( 77 ), "jump", "dash_start", SubResource( 78 ), "dash_start", "dash", SubResource( 79 ), "dash", "dash_end", SubResource( 80 ), "dash_end", "jump", SubResource( 81 ), "dash_end", "fall", SubResource( 82 ), "dash_end", "wall_slide", SubResource( 83 ), "dash_end", "jump_start", SubResource( 84 ), "slash1", "slash2", SubResource( 88 ), "slash2", "sheathe_sword", SubResource( 89 ), "slash2", "slash3", SubResource( 90 ), "slash3", "sheathe_sword", SubResource( 91 ), "wall_slide", "jump_start", SubResource( 93 ), "fall", "wall_slide", SubResource( 94 ), "wall_slide", "fall", SubResource( 95 ), "wield_sword", "charge_slash", SubResource( 99 ), "charge_slash", "sheathe_sword", SubResource( 100 ), "wall_slide", "wall_hooked", SubResource( 108 ), "fall", "wall_hooked", SubResource( 109 ), "jump", "wall_hooked", SubResource( 110 ) ]
 start_node = "fall"
-graph_offset = Vector2( 449.449, -69.6043 )
+graph_offset = Vector2( 783.817, -19.5265 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -1221,11 +1250,6 @@ region_rect = Rect2( 0, 0, 500, 333 )
 
 [node name="ModulateTween" type="Tween" parent="Pivot/Sprite"]
 playback_process_mode = 0
-
-[node name="Gun" type="Sprite" parent="Pivot"]
-position = Vector2( 13, -1 )
-scale = Vector2( 0.46094, 0.470534 )
-texture = ExtResource( 7 )
 
 [node name="Sword" type="Area2D" parent="Pivot"]
 collision_layer = 128
@@ -1280,6 +1304,16 @@ process_material = SubResource( 103 )
 [node name="ChargeTween" type="Tween" parent="Pivot/ChargeParticles"]
 playback_process_mode = 0
 
+[node name="Hook" parent="Pivot" instance=ExtResource( 6 )]
+scale = Vector2( 0.25, 0.25 )
+
+[node name="HookPivot" type="Node2D" parent="Pivot"]
+
+[node name="Gun" type="Sprite" parent="Pivot/HookPivot"]
+position = Vector2( 13, -1 )
+scale = Vector2( 0.46094, 0.470534 )
+texture = ExtResource( 7 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Pivot/Sprite")
 anims/RESET = SubResource( 2 )
@@ -1297,6 +1331,7 @@ anims/sheathe_sword = SubResource( 10 )
 anims/slash1 = SubResource( 11 )
 anims/slash2 = SubResource( 12 )
 anims/slash3 = SubResource( 13 )
+anims/wall_hooked = SubResource( 106 )
 anims/wall_slide = SubResource( 92 )
 anims/wield_sword = SubResource( 14 )
 
@@ -1328,9 +1363,5 @@ editor_draw_drag_margin = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 96 )
-
-[node name="Hook" parent="." instance=ExtResource( 6 )]
-position = Vector2( -1, 0 )
-scale = Vector2( 0.25, 0.25 )
 
 [node name="PlayerUI" parent="." instance=ExtResource( 3 )]
