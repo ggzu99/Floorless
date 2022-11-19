@@ -320,3 +320,15 @@ position = Vector2( 478, 125 )
 [node name="Bat4" parent="." instance=ExtResource( 5 )]
 light_mask = 0
 position = Vector2( 997, 1283 )
+
+[node name="Bat5" parent="." instance=ExtResource( 5 )]
+light_mask = 0
+position = Vector2( 871, 550 )
+
+[node name="Bat6" parent="." instance=ExtResource( 5 )]
+light_mask = 0
+position = Vector2( 1219, 514 )
+
+[node name="Bat7" parent="." instance=ExtResource( 5 )]
+light_mask = 0
+position = Vector2( 1928, 683 )
