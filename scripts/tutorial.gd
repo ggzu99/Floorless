@@ -2,6 +2,7 @@ extends Node2D
 
 onready var player = $Player
 onready var camera = $Player/Camera2D
+onready var tutorial_animation = $Player_Character/TutorialAnimation
 var has_moved = false
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,6 +11,7 @@ onready var transition_area = $ToLevel1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	tutorial_animation.play("tutorial")
 	player.hook.shoot(Vector2(0,-1))
 	Fade.level_enter()
 	player.this_scene = "res://scenes/tutorial.tscn"

@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://assets/TilesetBGpack/Cobble.png" type="Texture" id=1]
 [ext_resource path="res://scripts/spikes.gd" type="Script" id=2]
 [ext_resource path="res://assets/Spikes/16-bit-spike-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://scenes/player_character.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/tutorial.gd" type="Script" id=5]
+[ext_resource path="res://scenes/dummy_player.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CanvasItemMaterial" id=47]
 
@@ -266,6 +267,114 @@ points = PoolVector2Array( 15.8888, 15.1706, 5.92926, 9.72087, 5.8358, 5.88885, 
 
 [sub_resource type="RectangleShape2D" id=50]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=51]
+
+[sub_resource type="Animation" id=52]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1e-05 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=53]
+resource_name = "tutorial"
+length = 10.0
+tracks/0/type = "animation"
+tracks/0/path = NodePath("AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "wall_hooked", "fall", "wield_sword", "slash1", "jump", "fall" ),
+"times": PoolRealArray( 0, 1.1, 2.8, 2.9, 3.2, 3.6 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.1, 2.9, 3.5, 3.6, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 193, 55 ), Vector2( 193, 55 ), Vector2( 193, 330 ), Vector2( 280, 250 ), Vector2( 290, 250 ), Vector2( 338, 300 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2.8, 3.5 ),
+"transitions": PoolRealArray( 1e-05, 1e-05, 1 ),
+"update": 1,
+"values": [ 0.0, 90.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( -1, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/HookPivot:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -90.0 ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("Pivot/Hook")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ Vector2( 0, -1 ) ],
+"method": "shoot"
+}, {
+"args": [  ],
+"method": "release"
+} ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Pivot/HookPivot/Gun:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
 [node name="Mundo" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -304,3 +413,22 @@ scale = Vector2( 5.91358, 5.71978 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToLevel1"]
 shape = SubResource( 50 )
+
+[node name="Player_Character" parent="." instance=ExtResource( 6 )]
+modulate = Color( 0.745098, 0.745098, 0.745098, 1 )
+position = Vector2( 193, 70.2778 )
+
+[node name="HookPivot" parent="Player_Character/Pivot" index="5"]
+rotation = -1.5708
+
+[node name="Gun" parent="Player_Character/Pivot/HookPivot" index="0"]
+visible = false
+
+[node name="AnimationTree" parent="Player_Character" index="2"]
+parameters/playback = SubResource( 51 )
+
+[node name="TutorialAnimation" type="AnimationPlayer" parent="Player_Character"]
+anims/RESET = SubResource( 52 )
+anims/tutorial = SubResource( 53 )
+
+[editable path="Player_Character"]
