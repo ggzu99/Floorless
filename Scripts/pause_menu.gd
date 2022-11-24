@@ -19,7 +19,7 @@ func _on_resume_pressed():
 func _on_main_menu_pressed():
 	Game.reset_defaults()
 	Fade.to_level("res://scenes/ui/main_menu.tscn")
-	get_tree().paused = false
+	#get_tree().paused = false
 
 func _on_exit_pressed():
 	get_tree().quit()

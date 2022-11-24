@@ -286,7 +286,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=53]
 resource_name = "tutorial"
-length = 10.0
+length = 9.0
 tracks/0/type = "animation"
 tracks/0/path = NodePath("AnimationPlayer")
 tracks/0/interp = 1
@@ -294,8 +294,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"clips": PoolStringArray( "wall_hooked", "fall", "wield_sword", "slash1", "jump", "fall" ),
-"times": PoolRealArray( 0, 1.1, 2.8, 2.9, 3.2, 3.6 )
+"clips": PoolStringArray( "wall_hooked", "fall", "wield_sword", "slash1", "jump", "fall", "wall_slide", "jump_start", "wall_slide", "jump_start", "jump", "wall_slide", "jump_start", "jump", "dash_start", "dash", "dash_end", "fall", "jump", "fall", "wield_sword", "slash1", "sheathe_sword", "jump", "fall" ),
+"times": PoolRealArray( 0, 1.1, 2.5, 2.6, 2.9, 3.3, 3.7, 4.2, 4.6, 4.8, 4.9, 5, 5.1, 5.2, 5.9, 6.1, 6.4, 6.5, 6.8, 7.1, 7.4, 7.5, 7.8, 7.9, 8.1 )
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:position")
@@ -304,10 +304,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1.1, 2.9, 3.5, 3.6, 4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.1, 2.6, 3.2, 3.3, 3.7, 4.2, 4.4, 4.6, 4.8, 5, 5.2, 5.4, 5.5, 5.9, 6.4, 6.8, 7.1, 7.4, 7.6, 8.1, 8.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 193, 55 ), Vector2( 193, 55 ), Vector2( 193, 330 ), Vector2( 280, 250 ), Vector2( 290, 250 ), Vector2( 338, 300 ) ]
+"values": [ Vector2( 193, 55 ), Vector2( 193, 55 ), Vector2( 193, 330 ), Vector2( 280, 250 ), Vector2( 290, 250 ), Vector2( 345, 302 ), Vector2( 345, 340 ), Vector2( 310, 310 ), Vector2( 345, 290 ), Vector2( 310, 260 ), Vector2( 345, 230 ), Vector2( 310, 200 ), Vector2( 320, 195 ), Vector2( 321, 192 ), Vector2( 310, 60 ), Vector2( 420, 60 ), Vector2( 460, 110 ), Vector2( 500, 50 ), Vector2( 540, 90 ), Vector2( 560, 125 ), Vector2( 620, 60 ), Vector2( 670, 110 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:rotation_degrees")
@@ -316,10 +316,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 2.8, 3.5 ),
-"transitions": PoolRealArray( 1e-05, 1e-05, 1 ),
+"times": PoolRealArray( 0, 2.5, 3.2, 7.4, 7.9 ),
+"transitions": PoolRealArray( 1e-05, 1e-05, 1, 1, 1 ),
 "update": 1,
-"values": [ 0.0, 90.0, 0.0 ]
+"values": [ 0.0, 90.0, 0.0, 90.0, 0.0 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:scale")
@@ -328,10 +328,10 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 1.1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1.1, 3.7, 4.4, 4.6, 4.8, 5, 5.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( -1, 1 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Pivot/HookPivot:rotation_degrees")
@@ -352,10 +352,22 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 1.1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1.1, 5.3, 5.9, 6.7, 7.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ Vector2( 0, -1 ) ],
+"method": "shoot"
+}, {
+"args": [  ],
+"method": "release"
+}, {
+"args": [ Vector2( 0, -1 ) ],
+"method": "shoot"
+}, {
+"args": [  ],
+"method": "release"
+}, {
+"args": [ Vector2( 1, -1 ) ],
 "method": "shoot"
 }, {
 "args": [  ],
@@ -369,10 +381,36 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 1.1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1.1, 5.3, 5.9, 6.7, 7.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ true, false ]
+"values": [ true, false, true, false, true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Pivot/WallParticles:emitting")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 3.7, 4.1, 4.6, 4.8, 5, 5.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 8.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
 }
 
 [node name="Mundo" type="Node2D"]
@@ -416,7 +454,10 @@ shape = SubResource( 50 )
 
 [node name="Player_Character" parent="." instance=ExtResource( 6 )]
 modulate = Color( 0.745098, 0.745098, 0.745098, 1 )
-position = Vector2( 193, 70.2778 )
+position = Vector2( 670, 110 )
+
+[node name="Sword" parent="Player_Character/Pivot" index="1"]
+script = null
 
 [node name="HookPivot" parent="Player_Character/Pivot" index="5"]
 rotation = -1.5708

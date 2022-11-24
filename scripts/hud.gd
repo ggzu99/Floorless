@@ -1,6 +1,6 @@
 extends MarginContainer
 
-onready var hearts = $HBoxContainer/HP
+var hearts: Sprite
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -10,6 +10,7 @@ onready var label = $PowerUpDisplay/PowerUpName
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lives = Game.player_lives
+	hearts = $HBoxContainer/HP
 	hearts.frame=6-lives
 
 func set_lives(value):
@@ -25,5 +26,5 @@ func set_lives(value):
 func power_up_obtained(name:String):
 	label.text = name+" obtained!"
 	animation_player.play("visible")
-	yield(get_tree().create_timer(2),"timeout")
+	yield(get_tree().create_timer(3),"timeout")
 	animation_player.play("not_visible")

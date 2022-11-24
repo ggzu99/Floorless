@@ -5,15 +5,14 @@ extends Area2D
 # var a = 2
 # var b = "text"
 
-onready var sprite_anim = $Switch/SwitchPlayer
-onready var tile_anim = $Switch/TileMap2/TilePlayer
+onready var anim_player = $AnimationPlayer
+signal activated
 # Called when the node enters the scene tree for the first time.
 
 
 func activate():
-	sprite_anim.play("fade")
-	tile_anim.play("fade")
-	yield(get_tree().create_timer(1),"timeout")
+	anim_player.play("fade")
+	yield(anim_player,"animation_finished")
 	queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

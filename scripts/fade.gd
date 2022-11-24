@@ -23,8 +23,12 @@ func _on_animation_finished(anim_name: String):
 func to_level(scene_name:String):
 	fade_in()
 	yield(Fade,"fade_in")
+	get_tree().paused = true
 	get_tree().change_scene(scene_name)
+	get_tree().paused = false
 
 func level_enter():
 	fade_out()
+	get_tree().paused = true
 	yield(Fade,"fade_out")
+	get_tree().paused = false

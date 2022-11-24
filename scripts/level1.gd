@@ -13,6 +13,7 @@ onready var to_level3 = $ToLevel3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player.global_position = Game.player_position
+	player.pivot.scale.x = Game.player_direction
 	if player.global_position.y > 720:
 		player.pivot.scale.x = -1
 	Fade.level_enter()
@@ -33,10 +34,10 @@ func _process(delta):
 		
 
 func _on_body_entered1(body:Node):
-	Game.change_scene("res://scenes//level2.tscn",Vector2(88,525))
+	Game.change_scene("res://scenes//level2.tscn",Vector2(88,525),1)
 
 func _on_body_entered2(body:Node):
-	Game.change_scene("res://scenes//level2.tscn",Vector2(75,75))
+	Game.change_scene("res://scenes//level2.tscn",Vector2(75,75),1)
 
 func _on_body_entered3(body:Node):
-	Game.change_scene("res://scenes//level3.tscn",Vector2(1550,175))
+	Game.change_scene("res://scenes//level3.tscn",Vector2(1660,175),-1)

@@ -20,7 +20,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _on_body_entered(_body:Node):
-	Game.change_scene("res://scenes/level1.tscn",Vector2(95,34))
+	Game.change_scene("res://scenes/level1.tscn",Vector2(95,34),1)
 
 func _input(event):
 	if event is InputEventKey and not(has_moved):
