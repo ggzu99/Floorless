@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/ui/theme.tres" type="Theme" id=1]
+[ext_resource path="res://scripts/options_menu.gd" type="Script" id=2]
+
+[node name="OptionsMenu" type="MarginContainer"]
+pause_mode = 2
+margin_right = 640.0
+margin_bottom = 360.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+pause_mode = 2
+margin_right = 640.0
+margin_bottom = 52.0
+size_flags_vertical = 0
+text = "Options"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+pause_mode = 2
+margin_right = 640.0
+margin_bottom = 360.0
+alignment = 1
+
+[node name="Controls" type="Button" parent="VBoxContainer"]
+pause_mode = 2
+margin_top = 98.0
+margin_right = 640.0
+margin_bottom = 150.0
+size_flags_vertical = 9
+text = "Controls"
+
+[node name="Sound" type="Button" parent="VBoxContainer"]
+pause_mode = 2
+margin_top = 154.0
+margin_right = 640.0
+margin_bottom = 206.0
+text = "Sound"
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+pause_mode = 2
+margin_top = 210.0
+margin_right = 640.0
+margin_bottom = 262.0
+text = "Back"
