@@ -1,5 +1,214 @@
-[gd_scene format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/ui/theme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/ui/options_theme.tres" type="Theme" id=2]
+[ext_resource path="res://scenes/ui/action_remap_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/controls_menu.gd" type="Script" id=4]
 
 [node name="ControlsMenu" type="MarginContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 640.0
+margin_bottom = 360.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 640.0
+margin_bottom = 52.0
+size_flags_vertical = 1
+text = "Controls"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 56.0
+margin_right = 640.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_right = 502.0
+margin_bottom = 28.0
+text = "Action   Keyboard                Controller"
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 88.0
+margin_right = 640.0
+margin_bottom = 304.0
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+disabled = true
+flat = true
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+
+[node name="ActionName" type="VBoxContainer" parent="VBoxContainer/Button/HBoxContainer4"]
+margin_right = 74.0
+margin_bottom = 220.0
+size_flags_horizontal = 5
+size_flags_vertical = 2
+
+[node name="Left" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_right = 74.0
+margin_bottom = 28.0
+text = "Left"
+
+[node name="Right" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_top = 32.0
+margin_right = 74.0
+margin_bottom = 60.0
+text = "Right"
+
+[node name="Up" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_top = 64.0
+margin_right = 74.0
+margin_bottom = 92.0
+text = "Up"
+
+[node name="Down" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_top = 96.0
+margin_right = 74.0
+margin_bottom = 124.0
+text = "Down"
+
+[node name="Sword" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_top = 128.0
+margin_right = 74.0
+margin_bottom = 156.0
+text = "Sword"
+
+[node name="Hook" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_top = 160.0
+margin_right = 74.0
+margin_bottom = 188.0
+text = "Hook"
+
+[node name="Dash" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
+margin_top = 192.0
+margin_right = 74.0
+margin_bottom = 220.0
+text = "Dash"
+
+[node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer/Button/HBoxContainer4"]
+margin_left = 78.0
+margin_right = 640.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="LeftContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/LeftContainer" instance=ExtResource( 3 )]
+
+[node name="LeftButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/LeftContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="RightContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_top = 32.0
+margin_right = 562.0
+margin_bottom = 60.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/RightContainer" instance=ExtResource( 3 )]
+
+[node name="RightButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/RightContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="UpContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_top = 64.0
+margin_right = 562.0
+margin_bottom = 92.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/UpContainer" instance=ExtResource( 3 )]
+
+[node name="UpButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/UpContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DownContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_top = 96.0
+margin_right = 562.0
+margin_bottom = 124.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DownContainer" instance=ExtResource( 3 )]
+
+[node name="DownButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DownContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="SwordContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_top = 128.0
+margin_right = 562.0
+margin_bottom = 156.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/SwordContainer" instance=ExtResource( 3 )]
+
+[node name="SwordButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/SwordContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="HookContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_top = 160.0
+margin_right = 562.0
+margin_bottom = 188.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/HookContainer" instance=ExtResource( 3 )]
+
+[node name="HookButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/HookContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="DashContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+margin_top = 192.0
+margin_right = 562.0
+margin_bottom = 220.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DashContainer" instance=ExtResource( 3 )]
+
+[node name="DashButton" type="Button" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DashContainer"]
+margin_left = 283.0
+margin_right = 562.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+
+[node name="Return" type="Button" parent="VBoxContainer"]
+margin_top = 308.0
+margin_right = 640.0
+margin_bottom = 360.0
+size_flags_vertical = 8
+text = "Return"

@@ -4,8 +4,8 @@ onready var resume = $VBoxContainer/Resume
 onready var main_menu = $VBoxContainer/MainMenu
 onready var options = $VBoxContainer/Options
 onready var exit = $VBoxContainer/Exit
-signal release_focus
-
+signal options_pressed
+var focus_holder: Button = resume
 
 func _ready():
 	resume.connect("pressed", self, "_on_resume_pressed")
@@ -18,17 +18,17 @@ func _ready():
 func _on_resume_pressed():
 	get_tree().paused = false
 	visible = false
-	emit_signal("release_focus", "resume")
+	focus_holder = resume
 
 func _on_options_pressed():
 	visible = false
-	emit_signal("release_focus", "options")
+	focus_holder = options
+	emit_signal("options_pressed")
 
 func _on_main_menu_pressed():
 	Game.reset_defaults()
 	Fade.to_level("res://scenes/ui/main_menu.tscn")
-	emit_signal("release_focus", "main_menu")
-	#get_tree().paused = false
+	focus_holder = main_menu
 
 func _on_exit_pressed():
 	get_tree().quit()

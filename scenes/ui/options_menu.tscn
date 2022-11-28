@@ -5,8 +5,8 @@
 
 [node name="OptionsMenu" type="MarginContainer"]
 pause_mode = 2
-margin_right = 640.0
-margin_bottom = 360.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 
@@ -25,24 +25,33 @@ margin_right = 640.0
 margin_bottom = 360.0
 alignment = 1
 
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer"]
+margin_top = 70.0
+margin_right = 640.0
+margin_bottom = 122.0
+text = "FullScreen"
+align = 1
+icon_align = 1
+
 [node name="Controls" type="Button" parent="VBoxContainer"]
 pause_mode = 2
-margin_top = 98.0
+margin_top = 126.0
 margin_right = 640.0
-margin_bottom = 150.0
+margin_bottom = 178.0
 size_flags_vertical = 9
 text = "Controls"
 
 [node name="Sound" type="Button" parent="VBoxContainer"]
 pause_mode = 2
-margin_top = 154.0
+margin_top = 182.0
 margin_right = 640.0
-margin_bottom = 206.0
+margin_bottom = 234.0
+disabled = true
 text = "Sound"
 
 [node name="Back" type="Button" parent="VBoxContainer"]
 pause_mode = 2
-margin_top = 210.0
+margin_top = 238.0
 margin_right = 640.0
-margin_bottom = 262.0
+margin_bottom = 290.0
 text = "Back"
