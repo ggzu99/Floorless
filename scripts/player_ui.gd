@@ -6,8 +6,7 @@ extends CanvasLayer
 onready var pause_menu = $PauseMenu
 onready var options_menu = $OptionsMenu
 onready var controls_menu = $ControlsMenu
-onready var ui_controls_menu = $UiControlsMenu
-onready var ui_elements = [options_menu,pause_menu,ui_controls_menu]
+onready var ui_elements = [options_menu,pause_menu,controls_menu]
 onready var active_menu: MarginContainer = pause_menu
 
 # Called when the node enters the scene tree for the first time.
@@ -16,11 +15,7 @@ func _ready():
 	options_menu.connect("back_press",self,"_on_options_back_pressed")
 	options_menu.connect("controls_press",self,"_on_controls_pressed")
 	controls_menu.connect("return_press",self, "_on_controls_return_pressed")
-	controls_menu.connect("change_press",self, "_on_controls_change_pressed")
-	ui_controls_menu.connect("change_press",self, "_on_ui_controls_change_pressed")
-	ui_controls_menu.connect("return_press",self,"_on_ui_controls_return_pressed")
 	options_menu.hide()
-	ui_controls_menu.hide()
 	controls_menu.hide()
 	visible = true
 	
@@ -46,17 +41,8 @@ func _on_options_back_pressed():
 func _on_controls_pressed():
 	_on_menu_change(options_menu,controls_menu)
 
-func _on_controls_change_pressed():
-	_on_menu_change(controls_menu,ui_controls_menu)
-
-func _on_ui_controls_change_pressed():
-	_on_menu_change(ui_controls_menu,controls_menu)
-
 func _on_controls_return_pressed():
 	_on_menu_change(controls_menu,options_menu)
-	
-func _on_ui_controls_return_pressed():
-	_on_menu_change(ui_controls_menu,options_menu)
 
 func _on_menu_change(from: MarginContainer, to: MarginContainer):
 	to.show()
