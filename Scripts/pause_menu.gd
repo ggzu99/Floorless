@@ -5,7 +5,7 @@ onready var main_menu = $VBoxContainer/MainMenu
 onready var options = $VBoxContainer/Options
 onready var exit = $VBoxContainer/Exit
 signal options_pressed
-var focus_holder: Button = resume
+onready var focus_holder: Button = resume
 
 func _ready():
 	resume.connect("pressed", self, "_on_resume_pressed")

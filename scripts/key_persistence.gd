@@ -10,7 +10,7 @@ func _ready() -> void:
 	# First we create the keymap dictionary on startup with all
 	# the keymap actions we have.
 	for action in InputMap.get_actions():
-		keymaps[action] = InputMap.get_action_list(action)[0]
+		keymaps[action] = InputMap.get_action_list(action)
 	load_keymap()
 
 
@@ -33,7 +33,8 @@ func load_keymap() -> void:
 			# Whilst setting the keymap dictionary, we also set the
 			# correct InputMap event
 			InputMap.action_erase_events(action)
-			InputMap.action_add_event(action, keymaps[action])
+			for key in keymaps[action]:
+				InputMap.action_add_event(action, key)
 
 
 func save_keymap() -> void:

@@ -4,9 +4,9 @@
 [ext_resource path="res://scenes/ui/options_theme.tres" type="Theme" id=2]
 [ext_resource path="res://scenes/ui/action_remap_button.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/controls_menu.gd" type="Script" id=4]
-[ext_resource path="res://scenes/ui/controller_remap_button.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/ui/controller_remap_button.tscn" type="PackedScene" id=5]
 
-[node name="ControlsMenu" type="MarginContainer"]
+[node name="UiControlsMenu" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
@@ -20,26 +20,31 @@ margin_bottom = 360.0
 margin_right = 640.0
 margin_bottom = 52.0
 size_flags_vertical = 1
-text = "Controls"
+text = "Ui Controls"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_left = 24.0
 margin_top = 56.0
-margin_right = 621.0
+margin_right = 615.0
 margin_bottom = 71.0
-size_flags_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme = ExtResource( 2 )
+alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_right = 621.0
+margin_right = 591.0
 margin_bottom = 15.0
-text = "                       Action Keyboard                               Controller                                      "
+text = "                  Action  Keyboard                             Controller                                      "
+align = 3
+valign = 3
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 margin_left = 305.0
 margin_top = 75.0
 margin_right = 335.0
-margin_bottom = 322.0
+margin_bottom = 206.0
 size_flags_horizontal = 4
 size_flags_vertical = 3
 theme = ExtResource( 2 )
@@ -51,204 +56,173 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -190.0
 margin_right = 234.0
-margin_bottom = -99.0
+margin_bottom = -15.0
 size_flags_horizontal = 2
 
 [node name="ActionName" type="VBoxContainer" parent="VBoxContainer/Button/HBoxContainer4"]
-margin_right = 37.0
-margin_bottom = 148.0
+margin_right = 42.0
+margin_bottom = 110.0
 size_flags_horizontal = 5
 size_flags_vertical = 2
 
 [node name="Left" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
-margin_right = 37.0
+margin_right = 42.0
 margin_bottom = 15.0
 text = "Left"
 
 [node name="Right" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
 margin_top = 19.0
-margin_right = 37.0
+margin_right = 42.0
 margin_bottom = 34.0
 text = "Right"
 
 [node name="Up" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
 margin_top = 38.0
-margin_right = 37.0
+margin_right = 42.0
 margin_bottom = 53.0
 text = "Up"
 
 [node name="Down" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
 margin_top = 57.0
-margin_right = 37.0
+margin_right = 42.0
 margin_bottom = 72.0
 text = "Down"
 
 [node name="Label" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
 margin_top = 76.0
-margin_right = 37.0
+margin_right = 42.0
 margin_bottom = 91.0
-text = "Jump"
+text = "Accept"
 
 [node name="Sword" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
 margin_top = 95.0
-margin_right = 37.0
+margin_right = 42.0
 margin_bottom = 110.0
-text = "Sword"
-
-[node name="Hook" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
-margin_top = 114.0
-margin_right = 37.0
-margin_bottom = 129.0
-text = "Hook"
-
-[node name="Dash" type="Label" parent="VBoxContainer/Button/HBoxContainer4/ActionName"]
-margin_top = 133.0
-margin_right = 37.0
-margin_bottom = 148.0
-text = "Dash"
+text = "Cancel"
 
 [node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer/Button/HBoxContainer4"]
-margin_left = 41.0
+margin_left = 46.0
 margin_right = 454.0
-margin_bottom = 148.0
+margin_bottom = 110.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 
 [node name="LeftContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
-margin_right = 413.0
+margin_right = 408.0
 margin_bottom = 15.0
 size_flags_horizontal = 11
 size_flags_vertical = 3
 
 [node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/LeftContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
+margin_right = 202.0
 margin_bottom = 15.0
-action = "move_left"
+action_mode = 0
+action = "ui_left"
 
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/LeftContainer" instance=ExtResource( 6 )]
-action = "move_left"
+[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/LeftContainer" instance=ExtResource( 5 )]
+margin_left = 206.0
+margin_right = 408.0
+action = "ui_left"
 
 [node name="RightContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
 margin_top = 19.0
-margin_right = 413.0
+margin_right = 408.0
 margin_bottom = 34.0
 size_flags_horizontal = 11
 size_flags_vertical = 3
 
 [node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/RightContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
+margin_right = 202.0
 margin_bottom = 15.0
-action = "move_right"
+action = "ui_right"
 
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/RightContainer" instance=ExtResource( 6 )]
-action = "move_right"
+[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/RightContainer" instance=ExtResource( 5 )]
+margin_left = 206.0
+margin_right = 408.0
+action = "ui_right"
 
 [node name="UpContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
 margin_top = 38.0
-margin_right = 413.0
+margin_right = 408.0
 margin_bottom = 53.0
 size_flags_horizontal = 11
 size_flags_vertical = 3
 
 [node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/UpContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
+margin_right = 202.0
 margin_bottom = 15.0
-action = "move_up"
 
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/UpContainer" instance=ExtResource( 6 )]
-action = "move_up"
+[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/UpContainer" instance=ExtResource( 5 )]
+margin_left = 206.0
+margin_right = 408.0
 
 [node name="DownContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
 margin_top = 57.0
-margin_right = 413.0
+margin_right = 408.0
 margin_bottom = 72.0
 size_flags_horizontal = 11
 size_flags_vertical = 3
 
 [node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DownContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
+margin_right = 202.0
 margin_bottom = 15.0
-action = "move_down"
+action = "ui_down"
 
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DownContainer" instance=ExtResource( 6 )]
-action = "move_down"
+[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DownContainer" instance=ExtResource( 5 )]
+margin_left = 206.0
+margin_right = 408.0
+action = "ui_down"
 
-[node name="JumpContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+[node name="AcceptContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
 margin_top = 76.0
-margin_right = 413.0
+margin_right = 408.0
 margin_bottom = 91.0
 size_flags_horizontal = 11
 size_flags_vertical = 3
 
-[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/JumpContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/AcceptContainer" instance=ExtResource( 3 )]
+margin_right = 202.0
 margin_bottom = 15.0
-action = "jump"
+action = "ui_accept"
 
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/JumpContainer" instance=ExtResource( 6 )]
-action = "jump"
+[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/AcceptContainer" instance=ExtResource( 5 )]
+margin_left = 206.0
+margin_right = 408.0
+action = "ui_accept"
 
-[node name="SwordContainer2" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
+[node name="CancelContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
 margin_top = 95.0
-margin_right = 413.0
+margin_right = 408.0
 margin_bottom = 110.0
 size_flags_horizontal = 11
 size_flags_vertical = 3
 
-[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/SwordContainer2" instance=ExtResource( 3 )]
-margin_right = 204.0
+[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/CancelContainer" instance=ExtResource( 3 )]
+margin_right = 202.0
 margin_bottom = 15.0
-action = "slash"
+action = "ui_cancel"
 
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/SwordContainer2" instance=ExtResource( 6 )]
-action = "slash"
-
-[node name="HookContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
-margin_top = 114.0
-margin_right = 413.0
-margin_bottom = 129.0
-size_flags_horizontal = 11
-size_flags_vertical = 3
-
-[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/HookContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
-margin_bottom = 15.0
-action = "hook"
-
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/HookContainer" instance=ExtResource( 6 )]
-action = "hook"
-
-[node name="DashContainer" type="HBoxContainer" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer"]
-margin_top = 133.0
-margin_right = 413.0
-margin_bottom = 148.0
-size_flags_horizontal = 11
-size_flags_vertical = 3
-
-[node name="KeyMap" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DashContainer" instance=ExtResource( 3 )]
-margin_right = 204.0
-margin_bottom = 15.0
-action = "dash"
-
-[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/DashContainer" instance=ExtResource( 6 )]
-action = "dash"
+[node name="ControllerRemapButton" parent="VBoxContainer/Button/HBoxContainer4/ButtonContainer/CancelContainer" instance=ExtResource( 5 )]
+margin_left = 206.0
+margin_right = 408.0
+action = "ui_cancel"
 
 [node name="Change" type="Button" parent="VBoxContainer"]
-margin_left = 267.0
-margin_top = 326.0
-margin_right = 373.0
-margin_bottom = 341.0
+margin_left = 246.0
+margin_top = 210.0
+margin_right = 394.0
+margin_bottom = 225.0
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = ExtResource( 2 )
-text = "Change to Ui"
+text = "Change to Controls"
 
 [node name="Return" type="Button" parent="VBoxContainer"]
 margin_left = 284.0
-margin_top = 345.0
+margin_top = 229.0
 margin_right = 356.0
-margin_bottom = 360.0
+margin_bottom = 244.0
 size_flags_horizontal = 6
-size_flags_vertical = 4
+size_flags_vertical = 2
 theme = ExtResource( 2 )
 text = "Return"

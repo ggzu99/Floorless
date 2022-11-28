@@ -23,7 +23,7 @@ func _on_body_entered(_body:Node):
 	Game.change_scene("res://scenes/level1.tscn",Vector2(95,34),1)
 
 func _input(event):
-	if event is InputEventKey and not(has_moved):
+	if (event is InputEventKey or event is InputEventJoypadButton) and not(has_moved):
 		has_moved = true
 		player.hook.release()
 		player.state = player.State.NORMAL

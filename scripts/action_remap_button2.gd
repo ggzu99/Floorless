@@ -1,29 +1,29 @@
 extends Button
 
-export(String) var action = "ui_up"
-
+export(String) var action
 signal input_changed
 
 func _ready():
-	set_process_unhandled_key_input(false)
+	set_process_unhandled_input(false)
 	display_current_key()
 
 
 func _toggled(button_pressed):
-	set_process_unhandled_key_input(button_pressed)
+	set_process_unhandled_input(button_pressed)
 	if button_pressed:
-		text = "... Key"
+		text = "... Button"
 		release_focus()
 		emit_signal("input_changed",self)
 	else:
 		display_current_key()
 
 
-func _unhandled_key_input(event):
+func _unhandled_input(event):
 	# Note that you can use the _input callback instead, especially if
 	# you want to work with gamepads.
-	remap_action_to(event)
-	pressed = false
+	if event is InputEventJoypadButton:
+		remap_action_to(event)
+		pressed = false
 
 
 func remap_action_to(event):
@@ -36,12 +36,13 @@ func remap_action_to(event):
 	# And then save it to the keymaps file
 	KeyPersistence.keymaps[action] = InputMap.get_action_list(action)
 	KeyPersistence.save_keymap()
-	text = "%s Key" % event.as_text()
+	var index = event.button_index
+	text = "Button " + str(index)
 
 
 func display_current_key():
-	var current_key
+	var button: int
 	for list_entry in InputMap.get_action_list(action):
-		if list_entry is InputEventKey:
-			current_key = list_entry.as_text()
-	text = "%s Key" % current_key
+		if list_entry is InputEventJoypadButton:
+			button = list_entry.button_index
+	text = "Button " + str(button)
