@@ -30,12 +30,15 @@ func remap_action_to(event):
 	# We first change the event in this game instance.
 	var list = InputMap.get_actions()
 	var inmap = InputMap.get_action_list(action)
-	for map_action in list:
-		if InputMap.action_has_event(map_action,event) and not(map_action.begins_with("ui")):
-			InputMap.action_erase_event(map_action,event)
+	var old_event: InputEventJoypadButton
 	for action_event in inmap:
 		if action_event is InputEventJoypadButton:
 			InputMap.action_erase_event(action,action_event)
+			old_event = action_event
+	for map_action in list:
+		if InputMap.action_has_event(map_action,event) and not(map_action.begins_with("ui")) and action!=map_action:
+			InputMap.action_erase_event(map_action,event)
+			InputMap.action_add_event(map_action,old_event)
 	InputMap.action_add_event(action, event)
 	# And then save it to the keymaps file
 	KeyPersistence.keymaps[action] = InputMap.get_action_list(action)

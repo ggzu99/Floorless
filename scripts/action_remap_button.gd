@@ -31,14 +31,17 @@ func remap_action_to(event: InputEventKey):
 	var list = InputMap.get_actions()
 	var inmap = InputMap.get_action_list(action)
 	var no_scan = event
+	var old_event: InputEventKey
 	no_scan.scancode = 0
-	for map_action in list:
-		if InputMap.action_has_event(map_action,event) or InputMap.action_has_event(map_action,no_scan) and not(map_action.begins_with("ui")):
-			InputMap.action_erase_event(map_action,event)
-			InputMap.action_erase_event(map_action,no_scan)
 	for action_event in inmap:
 		if action_event is InputEventKey:
 			InputMap.action_erase_event(action,action_event)
+			old_event = action_event
+	for map_action in list:
+		if InputMap.action_has_event(map_action,event) or InputMap.action_has_event(map_action,no_scan) and not(map_action.begins_with("ui")) and map_action!=action:
+			InputMap.action_erase_event(map_action,event)
+			InputMap.action_erase_event(map_action,no_scan)
+			InputMap.action_add_event(map_action,old_event)
 	event.scancode = 0
 	InputMap.action_add_event(action, event)
 	# And then save it to the keymaps file

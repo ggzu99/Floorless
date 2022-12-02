@@ -293,7 +293,7 @@ position = Vector2( 354, 276 )
 
 [node name="Bat3" parent="." instance=ExtResource( 5 )]
 light_mask = 0
-position = Vector2( 1308, 374 )
+position = Vector2( 1379, 386 )
 
 [node name="Bat4" parent="." instance=ExtResource( 5 )]
 light_mask = 0
@@ -305,7 +305,7 @@ position = Vector2( 1083, 778 )
 
 [node name="Bat6" parent="." instance=ExtResource( 5 )]
 light_mask = 0
-position = Vector2( 1316, 626 )
+position = Vector2( 1368, 611 )
 
 [node name="NotImplemented" type="Area2D" parent="."]
 position = Vector2( 276, 877 )
