@@ -1,12 +1,31 @@
-[gd_resource type="Theme" load_steps=3 format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
+
+[sub_resource type="StyleBoxLine" id=4]
+color = Color( 1, 1, 1, 1 )
+grow_begin = -64.0
+grow_end = -64.0
+thickness = 2
+
+[sub_resource type="StyleBoxLine" id=3]
+color = Color( 1, 1, 1, 1 )
+grow_begin = -127.0
+grow_end = -127.0
+
+[sub_resource type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://assets/Fonts/m6x11.ttf"
 
 [sub_resource type="DynamicFont" id=2]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 font_data = SubResource( 1 )
+fallback/0 = SubResource( 5 )
 
 [resource]
 default_font = SubResource( 2 )
 HSeparator/constants/separation = 4
-HSeparator/styles/separator = null
+HSeparator/styles/separator = SubResource( 4 )
+ScrollContainer/styles/bg = null
+SmallHSeparator/base_type = "HSeparator"
+SmallHSeparator/styles/separator = SubResource( 3 )

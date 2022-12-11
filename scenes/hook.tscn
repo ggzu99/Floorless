@@ -20,7 +20,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 40, 300 )
 
 [node name="Tip" type="KinematicBody2D" parent="."]
-collision_layer = 0
+collision_layer = 64
 collision_mask = 14
 
 [node name="HookTip" type="Sprite" parent="Tip"]

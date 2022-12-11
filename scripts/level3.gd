@@ -28,6 +28,7 @@ func _on_body_entered(body:Node):
 	Game.change_scene("res://scenes/level1.tscn",Vector2(50,400),1)
 
 func _to_credits(body:Node):
+	Game.reset_defaults()
 	Fade.to_level("res://scenes/ui/credits.tscn")
 
 func _on_activated():

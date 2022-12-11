@@ -19,13 +19,20 @@ func _ready():
 	controls.connect("pressed", self, "_on_controls_pressed")
 	sound.connect("pressed", self, "_on_sound_pressed")
 	back.connect("pressed", self, "_on_back_pressed")
+	sound.disabled = !Game.easter_egg
+	if !sound.disabled:
+		sound.text = "Secret"
 
 
 func _on_fullscreen_toggle(button_pressed: bool):
 	OS.window_fullscreen = button_pressed
 	
 func _on_sound_pressed():
-	print("Not implemented")
+	Fade.display_msg("Thank you for playing!")
+	yield(get_tree().create_timer(4),"timeout")
+	Fade.display_msg("This game actually has no sound, sorry :(")
+	yield(get_tree().create_timer(4),"timeout")
+	Fade.display_msg("I hope you enjoyed it regardless :)")
 
 func _on_controls_pressed():
 	emit_signal("controls_press")

@@ -1,10 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/Fonts/DungeonFont.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/ui/PXUI-Basic/panel_Example1.png" type="Texture" id=2]
 [ext_resource path="res://assets/ui/DungeonUI/Hearts.png" type="Texture" id=3]
 [ext_resource path="res://scripts/hud.gd" type="Script" id=4]
-[ext_resource path="res://assets/Fonts/m6x11.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 2 )
@@ -33,56 +32,6 @@ Button/styles/hover = SubResource( 4 )
 Button/styles/normal = SubResource( 5 )
 Button/styles/pressed = SubResource( 6 )
 
-[sub_resource type="DynamicFont" id=8]
-font_data = ExtResource( 5 )
-
-[sub_resource type="Animation" id=9]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("PowerUpName:custom_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=10]
-resource_name = "not_visible"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("PowerUpName:custom_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=11]
-resource_name = "visible"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("PowerUpName:custom_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-
 [node name="HUD" type="MarginContainer"]
 pause_mode = 2
 margin_right = 640.0
@@ -102,21 +51,3 @@ grow_vertical = 0
 position = Vector2( 26, 9 )
 texture = ExtResource( 3 )
 vframes = 6
-
-[node name="PowerUpDisplay" type="VBoxContainer" parent="."]
-margin_right = 640.0
-margin_bottom = 360.0
-alignment = 2
-
-[node name="PowerUpName" type="Label" parent="PowerUpDisplay"]
-margin_top = 346.0
-margin_right = 640.0
-margin_bottom = 360.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 8 )
-valign = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PowerUpDisplay"]
-anims/RESET = SubResource( 9 )
-anims/not_visible = SubResource( 10 )
-anims/visible = SubResource( 11 )

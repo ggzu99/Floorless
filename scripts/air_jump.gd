@@ -20,5 +20,5 @@ func _physics_process(delta):
 
 func _on_body_entered(body:Node):
 	Game.air_jump = true
-	body.get_powerup("AirJump")
+	body.get_powerup("AirJump","Press the jump button midair for a second jump!")
 	queue_free()

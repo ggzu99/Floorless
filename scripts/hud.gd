@@ -5,8 +5,7 @@ var hearts: Sprite
 # var a = 2
 # var b = "text"
 var lives = 6 setget set_lives
-onready var animation_player = $PowerUpDisplay/AnimationPlayer
-onready var label = $PowerUpDisplay/PowerUpName
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	lives = Game.player_lives
@@ -23,8 +22,3 @@ func set_lives(value):
 	Game.player_lives=lives
 
 
-func power_up_obtained(name:String):
-	label.text = name+" obtained!"
-	animation_player.play("visible")
-	yield(get_tree().create_timer(3),"timeout")
-	animation_player.play("not_visible")

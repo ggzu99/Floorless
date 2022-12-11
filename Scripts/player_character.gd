@@ -303,8 +303,8 @@ func wall_and_not_enemy(collisions):
 			return false
 	return true
 
-func get_powerup(name:String):
-	hud.power_up_obtained(name)
+func get_powerup(name:String,desc:String):
+	Fade.power_up_obtained(name,desc)
 
 func _on_hooked():
 	var hook_particles = hook_particles_scene.instance()

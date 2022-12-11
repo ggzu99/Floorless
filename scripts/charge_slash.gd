@@ -20,5 +20,5 @@ func _physics_process(delta):
 
 func _on_body_entered(body:Node):
 	Game.charge_slash = true
-	body.get_powerup("ChargeSlash")
+	body.get_powerup("ChargeSlash","Hold the sword button and release for a powerful attack!")
 	queue_free()

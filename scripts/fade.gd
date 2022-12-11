@@ -1,7 +1,8 @@
 extends CanvasLayer
 
 onready var animation_player = $AnimationPlayer
-
+onready var animation_player2 = $PowerUpDisplay/AnimationPlayer
+onready var label: Label = $PowerUpDisplay/PowerUpName
 signal fade_in
 signal fade_out
 
@@ -32,3 +33,19 @@ func level_enter():
 	get_tree().paused = true
 	yield(Fade,"fade_out")
 	get_tree().paused = false
+
+func power_up_obtained(name:String, desc:String):
+	label.text = name+" obtained!"
+	animation_player2.play("visible")
+	yield(get_tree().create_timer(3),"timeout")
+	animation_player2.play("not_visible")
+	label.text = desc
+	animation_player2.play("visible")
+	yield(get_tree().create_timer(4),"timeout")
+	animation_player2.play("not_visible")
+
+func display_msg(msg:String):
+	label.text = msg
+	animation_player2.play("visible")
+	yield(get_tree().create_timer(3),"timeout")
+	animation_player2.play("not_visible")

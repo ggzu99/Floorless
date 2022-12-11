@@ -12,6 +12,7 @@ var player_direction: int
 var air_jump = false
 var charge_slash = false
 var level3_switch_activated = false
+var easter_egg = false
 
 func change_scene(scene:String, new_player_pos:Vector2, facing_direction: int):
 	Fade.to_level(scene)
@@ -20,6 +21,7 @@ func change_scene(scene:String, new_player_pos:Vector2, facing_direction: int):
 
 func reset_defaults():
 	player_lives = default_lives
-	air_jump = false
-	charge_slash = false
+	if !easter_egg:
+		air_jump = false
+		charge_slash = false
 
