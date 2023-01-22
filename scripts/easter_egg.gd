@@ -28,10 +28,11 @@ func _physics_process(delta):
 			player.play("vanish")
 			yield(player,"animation_finished")
 			map.queue_free()
-	wave_val+=0.2
-	if wave_val>=2*PI:
-		wave_val-=2*PI
-	egg.global_position.y-=sin(wave_val)/2
+	if !Game.easter_egg:
+		wave_val+=0.2
+		if wave_val>=2*PI:
+			wave_val-=2*PI
+		egg.global_position.y-=sin(wave_val)/2
 
 func _on_left(body:Node):
 	left_check = true

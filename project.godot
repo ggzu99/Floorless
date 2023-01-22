@@ -34,6 +34,10 @@ window/stretch/aspect="keep"
 
 scene_naming=2
 
+[global]
+
+rcedit=true
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
